@@ -1,0 +1,331 @@
+.checkout-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.checkout-container h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.selected-items {
+  margin-bottom: 30px;
+}
+
+.selected-items h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.selected-item {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.item-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.item-price {
+  font-size: 16px;
+  color: #888;
+  margin-bottom: 5px;
+}
+
+.item-quantity {
+  font-size: 16px;
+  color: #888;
+}
+
+.delivery-address {
+  margin-bottom: 30px;
+}
+
+.delivery-address h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.no-address {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.no-address p {
+  margin: 0;
+}
+
+.no-address button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  font-size: 14px;
+  background-color: #583442;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delivery-address select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.address-options {
+  display: flex;
+  flex-direction: column;
+}
+
+.address-option {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  position: relative;
+  padding-left: 25px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.address-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  background-color: #8e8e8e;
+  border-radius: 50%;
+}
+
+.address-option:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+.address-option input:checked ~ .checkmark {
+  background-color: #583442;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.address-option input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.address-option .checkmark:after {
+  top: 4px;
+  left: 4px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: white;
+}
+
+.label-text {
+  margin-left: 10px;
+  font-size: medium;
+}
+
+.new-address-inputs {
+  margin-top: 10px;
+  margin-left: 25px;
+}
+
+.new-address-inputs input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.phone-number {
+  margin-bottom: 30px;
+}
+
+.phone-number h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.phone-number-options {
+  display: flex;
+  flex-direction: column;
+}
+
+.phone-number-option {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  position: relative;
+  padding-left: 25px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.phone-number-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.phone-number-option .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  background-color: #8e8e8e;
+  border-radius: 50%;
+}
+
+.phone-number-option:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+.phone-number-option input:checked ~ .checkmark {
+  background-color: #583442;
+}
+
+.phone-number-option .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.phone-number-option input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.phone-number-option .checkmark:after {
+  top: 4px;
+  left: 4px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: white;
+}
+
+.existing-number,
+.no-number {
+  margin: 0;
+  margin-left: 40px;
+  color: #888;
+  margin-bottom: 3%;
+}
+
+.new-number-input {
+  width: 40%;
+  padding: 10px;
+  font-size: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 10px;
+  margin-left: 25px;
+}
+
+.coupon-code {
+  margin-bottom: 30px;
+}
+
+.coupon-code h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.coupon-input-container {
+  display: flex;
+  align-items: center;
+}
+
+.coupon-input-container input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.coupon-input-container button {
+  padding: 10px 20px;
+  font-size: 14px;
+  background-color: #583442;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.coupon-error {
+  color: red;
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+.order-summary {
+  margin-bottom: 30px;
+}
+
+.order-summary h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.summary-item span {
+  font-size: 16px;
+}
+
+.summary-item.total {
+  font-weight: bold;
+}
+
+.checkout-container button {
+  display: block;
+  width: 40%;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #583442;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+  margin: 0 auto;
+}
+
+.checkout-container button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

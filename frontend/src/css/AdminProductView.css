@@ -1,0 +1,83 @@
+.admin-product-view-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.admin-product-view-container h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.admin-product-view-form {
+  display: grid;
+  grid-gap: 20px;
+}
+
+.admin-product-view-form-group {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  align-items: center;
+}
+
+.admin-product-view-form-group label {
+  font-weight: bold;
+  color: #555;
+}
+
+.admin-product-view-form-group input[type='text'],
+.admin-product-view-form-group input[type='number'],
+.admin-product-view-form-group textarea,
+.admin-product-view-form-group select {
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  color: #333;
+}
+
+.admin-product-view-form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.admin-product-view-form-group select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 13.5l-5-5h10l-5 5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+  padding-right: 30px;
+}
+
+.admin-product-view-form-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.admin-product-view-form-actions button {
+  padding: 10px 20px;
+  margin-left: 10px;
+  border-radius: 4px;
+  border: none;
+  font-size: 16px;
+  color: #fff;
+  background-color: #583442;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.admin-product-view-form-actions button:last-child {
+  background-color: #583442;
+}
+
+
+.admin-product-view-error-message {
+  color: red;
+  margin-bottom: 10px;
+}

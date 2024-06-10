@@ -1,0 +1,15 @@
+
+.container-view {
+    text-align: center; /* Ensure this container is centered */
+    margin-top: 60px; /* Add some top margin for spacing */
+  }
+
+  .view-all-link {
+    text-decoration: none; /* Optionally remove link underlining */
+  }
+  
+  .view-all-link {
+    font-weight: bold;
+    font-size: 20px; /* Adjust size as needed */
+    color: #007bff; /* Adjust link color as needed */
+  }

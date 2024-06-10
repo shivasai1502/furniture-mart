@@ -1,0 +1,394 @@
+*****************
+File name: AdminCategoryPage.js
+Content:
+import React from 'react';
+import AdminNavbar from '../components/AdminNavbar';
+import AdminCategory from '../components/AdminCategory';
+
+
+const AdminCategoryPage = () => {
+  return (
+    <div>
+      <AdminNavbar />
+      <AdminCategory />
+    </div>
+  );
+};
+
+export default AdminCategoryPage;
+*****************
+*****************
+File name: AdminHandleOrdersPage.js
+Content:
+import React from 'react';
+import AdminNavbar from '../components/AdminNavbar';
+import AdminHandleOrders from '../components/AdminHandleOrders';
+
+
+const AdminHandleOrdersPage = () => {
+  return (
+    <div>
+      <AdminNavbar />
+      <AdminHandleOrders />
+    </div>
+  );
+};
+
+export default AdminHandleOrdersPage;
+*****************
+*****************
+File name: AdminHomePage.js
+Content:
+import React from 'react';
+import AdminNavbar from '../components/AdminNavbar';
+import AdminHome from '../components/AdminHome';
+
+
+const AdminHomePage = () => {
+  return (
+    <div>
+      <AdminNavbar />
+      <AdminHome />
+    </div>
+  );
+};
+
+export default AdminHomePage;
+*****************
+*****************
+File name: AdminLoginPage.js
+Content:
+import React from 'react';
+import AdminNavbar from '../components/AdminNavbar';
+import AdminLogin from '../components/AdminLogin';
+
+
+const AdminLoginPage = () => {
+  return (
+    <div>
+      <AdminNavbar />
+      <AdminLogin />
+    </div>
+  );
+};
+
+export default AdminLoginPage;
+*****************
+*****************
+File name: AdminProductsPage.js
+Content:
+import React from 'react';
+import AdminNavbar from '../components/AdminNavbar';
+import AdminProducts from '../components/AdminProducts';
+
+
+const AdminProductsPage = () => {
+  return (
+    <div>
+      <AdminNavbar />
+      <AdminProducts />
+    </div>
+  );
+};
+
+export default AdminProductsPage;
+*****************
+*****************
+File name: AdminProductViewPage.js
+Content:
+import React from 'react';
+import AdminNavbar from '../components/AdminNavbar';
+import AdminProductView from '../components/AdminProductView';
+
+
+const AdminProductViewPage = () => {
+  return (
+    <div>
+      <AdminNavbar />
+      <AdminProductView />
+    </div>
+  );
+};
+
+export default AdminProductViewPage;
+*****************
+*****************
+File name: CartPage.js
+Content:
+import React from 'react';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import Cart from '../components/Cart';
+
+
+const CartPage = () => {
+  return (
+    <div>
+      <Navbar />
+      <Cart />
+      <Footer />
+    </div>
+  );
+};
+
+export default CartPage;
+*****************
+*****************
+File name: CategoryProductsPage.js
+Content:
+import React from 'react';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import CategoryProducts from '../components/CategoryProducts';
+
+
+const CategoryProductsPage = () => {
+  return (
+    <div>
+      <Navbar />
+      <CategoryProducts />
+      <Footer />
+    </div>
+  );
+};
+
+export default CategoryProductsPage;
+*****************
+*****************
+File name: CheckoutPage.js
+Content:
+import React from 'react';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import Checkout from '../components/Checkout';
+
+
+const CheckoutPage = () => {
+  return (
+    <div>
+      <Navbar />
+      <Checkout />
+      <Footer />
+    </div>
+  );
+};
+
+export default CheckoutPage;
+*****************
+*****************
+File name: CustomerOrdersPage.js
+Content:
+import React from 'react';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import CustomerOrders from '../components/CustomerOrders';
+
+
+const CustomerOrdersPage = () => {
+  return (
+    <div>
+      <Navbar />
+      <CustomerOrders />
+      <Footer />
+    </div>
+  );
+};
+
+export default CustomerOrdersPage;
+*****************
+*****************
+File name: file_contents.txt
+Content:
+*****************
+*****************
+File name: ForgetPasswordPage.js
+Content:
+import React from 'react';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import ForgetPassword from '../components/ForgetPassword';
+
+
+const ForgetPasswordPage = () => {
+  return (
+    <div>
+      <Navbar />
+      <ForgetPassword />
+      <Footer />
+    </div>
+  );
+};
+
+export default ForgetPasswordPage;
+*****************
+*****************
+File name: HomePage.js
+Content:
+import React from 'react';
+import Categories from '../components/Categories';
+import Hero from '../components/Hero';
+import ViewAll from '../components/viewAll';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+
+const HomePage = () => {
+  return (
+    <div>
+      <Navbar />
+      <Hero />
+      <Categories />
+      <ViewAll />
+      <Footer />
+    </div>
+  );
+};
+
+export default HomePage;
+*****************
+*****************
+File name: IndividualProductPage.js
+Content:
+import React from 'react';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import IndividualProduct from '../components/IndividualProduct';
+
+
+const IndividualProductPage = () => {
+  return (
+    <div>
+      <Navbar />
+      <IndividualProduct />
+      <Footer />
+    </div>
+  );
+};
+
+export default IndividualProductPage;
+*****************
+*****************
+File name: PaymentPage.js
+Content:
+import React from 'react';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import Payment from '../components/Payment';
+
+
+const PaymentPage = () => {
+  return (
+    <div>
+      <Navbar />
+      <Payment />
+      <Footer />
+    </div>
+  );
+};
+
+export default PaymentPage;
+*****************
+*****************
+File name: ProfilePage.js
+Content:
+import React from 'react';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import Profile from '../components/Profile';
+
+
+const ProfilePage = () => {
+  return (
+    <div>
+      <Navbar />
+      <Profile />
+      <Footer />
+    </div>
+  );
+};
+
+export default ProfilePage;
+*****************
+*****************
+File name: SignInFormPage.js
+Content:
+import React from 'react';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import SignInForm from '../components/SignInForm';
+
+
+const SignInFormPage = () => {
+  return (
+    <div>
+      <Navbar />
+      <SignInForm />
+      <Footer />
+    </div>
+  );
+};
+
+export default SignInFormPage;
+*****************
+*****************
+File name: SignUpFormPage.js
+Content:
+import React from 'react';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import SignUpForm from '../components/SignUpForm';
+
+
+const SignUpFormPage = () => {
+  return (
+    <div>
+      <Navbar />
+      <SignUpForm />
+      <Footer />
+    </div>
+  );
+};
+
+export default SignUpFormPage;
+*****************
+*****************
+File name: viewAllPage.js
+Content:
+import React from 'react';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import ViewAll from '../components/viewAll';
+
+
+const ViewAllPage = () => {
+  return (
+    <div>
+      <Navbar />
+      <ViewAll />
+      <Footer />
+    </div>
+  );
+};
+
+export default ViewAllPage;
+*****************
+*****************
+File name: ViewOrderPage.js
+Content:
+import React from 'react';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import ViewOrder from '../components/ViewOrder';
+
+
+const ViewOrderPage = () => {
+  return (
+    <div>
+      <Navbar />
+      <ViewOrder />
+      <Footer />
+    </div>
+  );
+};
+
+export default ViewOrderPage;
+*****************

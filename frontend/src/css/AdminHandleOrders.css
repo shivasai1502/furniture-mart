@@ -1,0 +1,151 @@
+.admin-handle-orders-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.admin-handle-orders-container h2 {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.admin-handle-orders-tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.admin-handle-orders-tab {
+  padding: 10px 20px;
+  background-color: #f5f5f5;
+  border: none;
+  border-radius: 4px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+}
+
+.admin-handle-orders-tab.active {
+  background-color: #583442;
+  color: #fff;
+}
+
+.admin-handle-orders-table-container {
+  overflow-x: auto;
+}
+
+.admin-handle-orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.admin-handle-orders-table th,
+.admin-handle-orders-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.admin-handle-orders-table th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+.admin-handle-orders-button {
+  padding: 8px 12px;
+  background-color: #583442;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+}
+
+.admin-handle-orders-button:hover {
+  background-color: #6f4350;
+}
+
+.admin-handle-orders-details {
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.admin-handle-orders-details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.admin-handle-orders-details-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.admin-handle-orders-close-icon {
+  cursor: pointer;
+  font-size: 24px;
+  color: #888;
+  transition: color 0.3s ease;
+}
+
+.admin-handle-orders-close-icon:hover {
+  color: #000;
+}
+
+.admin-handle-orders-items-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.admin-handle-orders-items-table th,
+.admin-handle-orders-items-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.admin-handle-orders-items-table th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+.admin-handle-orders-items-table td select,
+.admin-handle-orders-items-table td input[type="date"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+@media screen and (max-width: 768px) {
+  .admin-handle-orders-table th,
+  .admin-handle-orders-table td,
+  .admin-handle-orders-items-table th,
+  .admin-handle-orders-items-table td {
+    padding: 8px;
+  }
+
+  .admin-handle-orders-details {
+    padding: 15px;
+  }
+
+  .admin-handle-orders-details-header h3 {
+    font-size: 18px;
+  }
+}

@@ -1,0 +1,154 @@
+.admin-home-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+.admin-home-left-section {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.admin-home-right-section {
+  flex: 1;
+}
+
+.admin-home-delivery-status {
+  background-color: #629353;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+.admin-home-utility-charges {
+  background-color: #44bbb5;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+.admin-home-toy-info {
+  background-color: #8ea6e9;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+.admin-home-container h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.admin-home-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.admin-home-table th,
+.admin-home-table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+.admin-home-table th {
+  background-color: #f5f5f5;
+}
+
+.admin-home-utility-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.admin-home-utility-item span {
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+.admin-home-utility-item input {
+  margin-left: 10px;
+  width: 30%;
+}
+
+.admin-home-utility-actions {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.admin-home-utility-actions svg {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.admin-home-coupon-form {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  background-color: #44bbb5;
+  border-radius: 5px;
+}
+
+.admin-home-coupon-form input {
+  background-color: #fff;
+  border: 1px solid #000;
+  padding: 12px 15px;
+  margin: 8px 2px;
+  width: 60%;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+}
+
+.admin-home-coupon-form input {
+  margin-right: 10px;
+  width: 50%;
+}
+
+.admin-home-coupon-form svg {
+  cursor: pointer;
+  width: 30px;
+}
+
+.admin-home-coupon-list {
+  padding-left: 20px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.admin-home-coupon-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+.admin-home-coupon-list li span {
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+.admin-home-coupon-list li svg {
+  cursor: pointer;
+}

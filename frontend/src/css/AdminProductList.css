@@ -1,0 +1,108 @@
+.admin-productlist-container {
+  padding: 20px;
+}
+
+.admin-productlist-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.admin-productlist-category-item {
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f5f5f5;
+}
+
+.admin-productlist-category-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  background-color: #e0e0e0;
+}
+
+.admin-productlist-category-title {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.admin-productlist-expand-icon {
+  font-size: 20px;
+  font-weight: bold;
+  color: #555;
+}
+
+.admin-productlist-subcategory-list {
+  padding: 10px;
+}
+
+.admin-productlist-subcategory-item {
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.admin-productlist-subcategory-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  background-color: #f0f0f0;
+}
+
+.admin-productlist-subcategory-title {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.admin-productlist-product-list {
+  padding: 10px;
+}
+
+.admin-productlist-product-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.admin-productlist-product-number {
+  font-weight: bold;
+  color: #555;
+}
+
+.admin-productlist-product-name {
+  flex: 1;
+  margin-left: 10px;
+  color: #333;
+}
+
+.admin-productlist-product-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.admin-productlist-edit-button,
+.admin-productlist-delete-button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #fff;
+}
+
+.admin-productlist-edit-button {
+  background-color: #007bff;
+}
+
+.admin-productlist-delete-button {
+  background-color: #dc3545;
+}

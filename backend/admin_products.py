@@ -8,15 +8,22 @@ from gridfs import GridFS
 admin_toys_bp = Blueprint('product', __name__)
 fs = GridFS(db)
 
+
 @admin_toys_bp.route('/all', methods=['GET'])
 @token_required
 def get_all_products(current_user):
     try:
         products = list(db.products.find())
-        return json.dumps(products, default=str), 200
+        for product in products:
+            product['_id'] = str(product['_id'])
+            product['category'] = str(product['category'])
+            product['subcategory'] = str(product['subcategory'])
+            product['image_id'] = str(product['image_id']) if product['image_id'] else None
+        return json.dumps(products), 200
     except Exception as e:
         print(f"Error fetching products: {str(e)}")
         return jsonify({'error': 'An error occurred while fetching products'}), 500
+
 
 @admin_toys_bp.route('/insert', methods=['POST'])
 @token_required
@@ -27,9 +34,14 @@ def add_product(current_user):
         description = data.get('description')
         price = float(data.get('price'))
         category = data.get('category')
-        age_range = data.get('age_range')
-        unit= data.get('unit')
-        stock = int(data.get('stock'))
+        subcategory = data.get('subcategory')
+        features = data.get('features')
+        weights = data.get('weights')
+        dimensions = data.get('dimensions')
+        specification = data.get('specification')
+        hasMaintenance = data.get('hasMaintenance') == 'true'
+        maintenancePlans = json.loads(data.get('maintenancePlans'))
+        additionalInfo = data.get('additionalInfo')
         image = request.files.get('image')
         
         if image:
@@ -41,11 +53,16 @@ def add_product(current_user):
             'name': name,
             'description': description,
             'price': price,
-            'category': category,
-            'unit': unit,
-            'age_range': age_range,
-            'image_id': image_id,
-            'stock': stock
+            'category': ObjectId(category),
+            'subcategory': ObjectId(subcategory),
+            'features': features,
+            'weights': weights,
+            'dimensions': dimensions,
+            'specification': specification,
+            'hasMaintenance': hasMaintenance,
+            'maintenancePlans': maintenancePlans,
+            'additionalInfo': additionalInfo,
+            'image_id': image_id
         }
         
         db.products.insert_one(product)
@@ -55,18 +72,6 @@ def add_product(current_user):
         print(f"Error adding product: {str(e)}")
         return jsonify({'error': 'An error occurred while adding the product'}), 500
 
-@admin_toys_bp.route('/<string:product_id>', methods=['GET'])
-@token_required
-def get_product(current_user, product_id):
-    try:
-        product = db.products.find_one({'_id': ObjectId(product_id)})
-        if product:
-            return json.dumps(product, default=str), 200
-        else:
-            return jsonify({'error': 'Product not found'}), 404
-    except Exception as e:
-        print(f"Error fetching product: {str(e)}")
-        return jsonify({'error': 'An error occurred while fetching the product'}), 500
 
 @admin_toys_bp.route('/edit/<string:product_id>', methods=['PUT'])
 @token_required
@@ -77,9 +82,14 @@ def update_product(current_user, product_id):
         description = data.get('description')
         price = float(data.get('price'))
         category = data.get('category')
-        age_range = data.get('age_range')
-        unit= data.get('unit') if data.get('unit') else None
-        stock = int(data.get('stock'))
+        subcategory = data.get('subcategory')
+        features = data.get('features')
+        weights = data.get('weights')
+        dimensions = data.get('dimensions')
+        specification = data.get('specification')
+        hasMaintenance = data.get('hasMaintenance') == 'true'
+        maintenancePlans = json.loads(data.get('maintenancePlans'))
+        additionalInfo = data.get('additionalInfo')
         image = request.files.get('image')
         
         product = db.products.find_one({'_id': ObjectId(product_id)})
@@ -89,10 +99,15 @@ def update_product(current_user, product_id):
                 'name': name,
                 'description': description,
                 'price': price,
-                'category': category,
-                'unit': unit, # Add this line to update the 'unit' field
-                'age_range': age_range,
-                'stock': stock
+                'category': ObjectId(category),
+                'subcategory': ObjectId(subcategory),
+                'features': features,
+                'weights': weights,
+                'dimensions': dimensions,
+                'specification': specification,
+                'hasMaintenance': hasMaintenance,
+                'maintenancePlans': maintenancePlans,
+                'additionalInfo': additionalInfo
             }
             
             if image:
@@ -107,6 +122,7 @@ def update_product(current_user, product_id):
     except Exception as e:
         print(f"Error updating product: {str(e)}")
         return jsonify({'error': 'An error occurred while updating the product'}), 500
+
 
 @admin_toys_bp.route('/delete/<string:product_id>', methods=['DELETE'])
 @token_required

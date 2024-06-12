@@ -1,0 +1,66 @@
+.admin-product-view-form {
+  margin-bottom: 20px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.admin-product-form-group {
+  margin-bottom: 15px;
+}
+
+.admin-product-form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.admin-product-form-group input[type='text'],
+.admin-product-form-group input[type='number'],
+.admin-product-form-group textarea,
+.admin-product-form-group select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  color: #333;
+}
+
+.admin-product-form-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.admin-product-form-radio-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.admin-product-form-radio-group label {
+  margin-right: 10px;
+}
+
+.admin-product-form-message {
+  margin-top: 5px;
+  color: #888;
+  font-size: 14px;
+}
+
+.admin-product-form-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.admin-product-form-actions button {
+  margin-left: 10px;
+}
+
+.admin-product-error-message {
+  color: red;
+  margin-bottom: 10px;
+}

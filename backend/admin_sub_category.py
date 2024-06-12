@@ -17,11 +17,38 @@ subcategory_schema = {
     'products': []  # Array to store references to related products
 }
 
+
+
+# ... (existing code remains the same)
+
+@admin_subcategory_bp.route('/all-in', methods=['GET'])
+@token_required
+def get_subcategories_in(current_user):
+    try:
+        subcategories = list(db.subcategories.find())
+        for subcategory in subcategories:
+            subcategory['_id'] = str(subcategory['_id'])
+            subcategory['category'] = str(subcategory['category'])
+            subcategory['image_id'] = str(subcategory['image_id']) if subcategory['image_id'] else None
+            subcategory['products'] = [str(product_id) for product_id in subcategory['products']]
+        return json.dumps(subcategories), 200
+    except Exception as e:
+        print(f"Error fetching subcategories: {str(e)}")
+        return jsonify({'error': 'An error occurred while fetching subcategories'}), 500
+
+# ... (remaining code remains the same)
+
 @admin_subcategory_bp.route('/all', methods=['GET'])
 @token_required
 def get_subcategories(current_user):
     try:
+        category = request.args.get('category')
+        query = {'category': ObjectId(category)} if category else {}
+        
         subcategories = list(db.subcategories.aggregate([
+            {
+                '$match': query
+            },
             {
                 '$lookup': {
                     'from': 'categories',

@@ -17,8 +17,7 @@ def get_categories(current_user):
         
         # Fetch products for each category
         for category in categories:
-            products = list(db.products.find({'category': category['link']}))
-            category['products'] = products
+            category['subcategories'] = [str(subcategory_id) for subcategory_id in category['subcategories']]
         
         return json.dumps(categories, default=str), 200
     except Exception as e:

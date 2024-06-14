@@ -8,6 +8,7 @@ from auth_utils import token_required
 from werkzeug.security import generate_password_hash
 from jsonencoder import JSONEncoder
 from datetime import datetime, timedelta
+
 order_bp = Blueprint('orders', __name__)
 
 @order_bp.route('/payments', methods=['GET'])
@@ -34,7 +35,7 @@ def place_order(user):
     items = order_data.get('items')
     total_cost = order_data.get('cost')
     tax = order_data.get('tax')
-    discount = order_data.get('discount')
+    deliveryCharge = order_data.get('deliveryCharge')
     card_details = order_data.get('cardDetails')
     email = user['email']
     phone_number = order_data.get('phoneNumber')
@@ -43,23 +44,17 @@ def place_order(user):
     if not items or not total_cost or not email or not address:
         return jsonify({'error': 'Required fields are missing'}), 400
 
-    # Update stock and set additional fields for each item
+    # Set additional fields for each item
     for item in items:
         product = db.products.find_one({'_id': ObjectId(item['_id'])})
-        new_stock = product['stock'] - item['quantity']
-        if new_stock < 0:
-            return jsonify({'error': 'Insufficient stock for product: ' + product['name']}), 400
-        db.products.update_one(
-            {'_id': ObjectId(item['_id'])},
-            {'$set': {'stock': new_stock}}
-        )
         item['deliveryStatus'] = 'Pending'
         estimated_delivery_date = datetime.now() + timedelta(days=5)
         item['EstimatedDeliveryDate'] = estimated_delivery_date.strftime('%m-%d-%Y')
         item['RefundMessage'] = None
         item['DeliveryDate'] = None
-        item['Cost'] = item['quantity'] * product['price']
-        
+        item['Cost'] = item['quantity'] * product['price'] + float(item['maintenanceCost'])
+        item['maintenancePlan'] = item['maintenancePlan']
+
     payment_id = None
     if card_details:
         # Check if the card number already exists in the payments collection
@@ -88,7 +83,7 @@ def place_order(user):
         'items': items,
         'Totalcost': total_cost,
         'tax': tax,
-        'discount': discount,
+        'deliveryCharge': deliveryCharge,
         'paymentId': payment_id,
         'email': email,
         'phoneNumber': phone_number,
@@ -100,7 +95,7 @@ def place_order(user):
     order_result = db.orders.insert_one(order)
     order_id = str(order_result.inserted_id)
 
-    return jsonify({'orderId': order_id }), 201
+    return jsonify({'orderId': order_id}), 201
 
 @order_bp.route('/customer', methods=['GET'])
 @token_required
@@ -152,7 +147,8 @@ def get_order(user, order_id):
             'EstimatedDeliveryDate': item.get('EstimatedDeliveryDate'),
             'RefundMessage': item.get('RefundMessage'),
             'DeliveryDate': item.get('DeliveryDate'),
-            'Cost': item['Cost']
+            'Cost': item['Cost'],
+            'maintenancePlan': item.get('maintenancePlan')
         }
         order_items.append(order_item)
 
@@ -161,7 +157,7 @@ def get_order(user, order_id):
         'items': order_items,
         'Totalcost': order['Totalcost'],
         'tax': order.get('tax'),
-        'discount': order.get('discount'),
+        'deliveryCharge': order.get('deliveryCharge'),
         'paymentId': order.get('paymentId'),
         'phoneNumber': order.get('phoneNumber'),
         'address': order['address'],
@@ -192,19 +188,10 @@ def cancel_item(user, order_id, item_id):
     if item_to_cancel['deliveryStatus'] != 'Pending':
         return jsonify({'error': 'Item cannot be cancelled as it is already delivered or in transit'}), 400
 
-    # Update stock for the cancelled item
-    product = db.products.find_one({'_id': ObjectId(item_to_cancel['_id'])})
-    new_stock = product['stock'] + item_to_cancel['quantity']
-    db.products.update_one(
-        {'_id': ObjectId(item_to_cancel['_id'])},
-        {'$set': {'stock': new_stock}}
-    )
-
     item_to_cancel['deliveryStatus'] = 'Cancelled'
     item_to_cancel['EstimatedDeliveryDate'] = None
     item_to_cancel['DeliveryDate'] = None
     item_to_cancel['RefundMessage'] = f"Refund of {item_to_cancel['Cost']} processed for the cancelled item & Item will be picked up in 2-3 business days"
-
 
     db.orders.update_one(
         {'_id': ObjectId(order_id)},

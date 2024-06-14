@@ -61,37 +61,28 @@
   color: #888;
 }
 
+.cart-item-maintenance-plan {
+  font-size: 16px;
+  color: #888;
+  margin-bottom: 5px;
+}
+
+.cart-item-maintenance-cost {
+  margin-left: 5px;
+  font-size: 14px;
+  color: #888;
+}
+
 .cart-item-quantity {
-  display: flex;
-  align-items: center;
-  flex-basis: 20%;
-  justify-content: flex-end;
-  align-items: flex-end;
-}
-
-.cart-item-quantity button {
-  padding: 5px 10px;
   font-size: 16px;
-  background-color: #5aaf9e;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.cart-item-quantity button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.cart-item-quantity span {
-  margin: 0 10px;
-  font-size: 16px;
+  color: #888;
+  margin-bottom: 5px;
 }
 
 .cart-item-total {
-  margin-left: 20px;
   font-size: 16px;
   font-weight: bold;
+  margin-top: 10px;
 }
 
 .cart-total {
@@ -154,4 +145,3 @@
   font-size: 18px;
   color: #888;
 }
-

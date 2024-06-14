@@ -19,11 +19,8 @@ const Checkout = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [useExistingNumber, setUseExistingNumber] = useState(true);
   const [newPhoneNumber, setNewPhoneNumber] = useState('');
-  const [taxRate, setTaxRate] = useState(0);
-  const [deliveryCharge, setDeliveryCharge] = useState(0);
-  const [couponCode, setCouponCode] = useState('');
-  const [discount, setDiscount] = useState(0);
-  const [couponError, setCouponError] = useState('');
+  const [taxRate] = useState(0.08); // Set default tax rate (e.g., 8%)
+  const [deliveryCharge] = useState(5.99); // Set default delivery charge
   const [phoneNumberError, setPhoneNumberError] = useState('');
 
   useEffect(() => {
@@ -46,27 +43,7 @@ const Checkout = () => {
       }
     };
 
-    const fetchOrderUtilityDetails = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          navigate('/login');
-          return;
-        }
-        const response = await axios.get('http://localhost:5000/api/admin_order_utility_details/get-order-utility-details', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setTaxRate(response.data.taxRate);
-        setDeliveryCharge(response.data.deliveryCharge);
-      } catch (error) {
-        console.error('Error fetching order utility details:', error);
-      }
-    };
-
     fetchUserInfo();
-    fetchOrderUtilityDetails();
   }, [navigate]);
 
   const handleAddressChange = (e) => {
@@ -75,29 +52,6 @@ const Checkout = () => {
 
   const handleNewAddressChange = (e) => {
     setNewAddress({ ...newAddress, [e.target.name]: e.target.value });
-  };
-
-  const handleCouponCodeChange = (e) => {
-    setCouponCode(e.target.value);
-  };
-
-  const validateCouponCode = async () => {
-    try {
-      const response = await axios.post('http://localhost:5000/api/admin_order_utility_details/validate', {
-        couponCode,
-      });
-      const { isValid, discountPercentage } = response.data;
-      if (isValid) {
-        setDiscount(discountPercentage);
-        setCouponError('');
-      } else {
-        setDiscount(0);
-        setCouponError('Invalid coupon code');
-      }
-    } catch (error) {
-      console.error('Error validating coupon code:', error);
-      setCouponError('Error validating coupon code');
-    }
   };
 
   const handleProceedToPayment = async () => {
@@ -141,16 +95,16 @@ const Checkout = () => {
       }
 
       // Calculate subtotal
-      const subtotal = selectedItems.reduce((total, item) => total + item.price * item.quantity, 0);
+      const subtotal = selectedItems.reduce((total, item) => {
+        const maintenancePlanCost = item.maintenancePlan !== 'None' ? parseFloat(item.product.maintenancePlans.find((plan) => plan.title === item.maintenancePlan).cost) : 0;
+        return total + (item.product.price + maintenancePlanCost) * item.quantity;
+      }, 0);
 
       // Calculate tax
       const tax = subtotal * taxRate;
 
-      // Calculate discount amount
-      const discountAmount = subtotal * (discount / 100);
-
       // Calculate total cost
-      const totalCost = subtotal + tax + deliveryCharge - discountAmount;
+      const totalCost = subtotal + tax + deliveryCharge;
 
       // Proceed to payment with selected items, phone number, address, and total cost
       navigate('/payment', {
@@ -161,7 +115,6 @@ const Checkout = () => {
           subtotal,
           tax,
           deliveryCharge,
-          discount: discountAmount,
           totalCost,
         },
       });
@@ -177,13 +130,19 @@ const Checkout = () => {
       <h2>Checkout</h2>
       <div className="selected-items">
         <h3>Selected Items</h3>
-        {selectedItems.map((item) => (
-          <div key={item._id} className="selected-item">
-            <div className="item-name">{item.name}</div>
-            <div className="item-price">Price: ${item.price}</div>
-            <div className="item-quantity">Quantity: {item.quantity}</div>
-          </div>
-        ))}
+        {selectedItems.map((item, index) => {
+          const maintenancePlanCost = item.maintenancePlan !== 'None' ? parseFloat(item.product.maintenancePlans.find((plan) => plan.title === item.maintenancePlan).cost) : 0;
+          return (
+            <div key={index} className="selected-item">
+              <div className="item-name">{item.product.name}</div>
+              <div className="item-price">Price: ${item.product.price}</div>
+              <div className="item-maintenance-plan">
+                Maintenance Plan: {item.maintenancePlan} (${maintenancePlanCost})
+              </div>
+              <div className="item-quantity">Quantity: {item.quantity}</div>
+            </div>
+          );
+        })}
       </div>
       <div className="delivery-address">
         <h3>Delivery Address</h3>
@@ -314,47 +273,41 @@ const Checkout = () => {
           {phoneNumberError && <p className="phone-number-error">{phoneNumberError}</p>}
         </div>
       </div>
-      <div className="coupon-code">
-        <h3>Coupon Code</h3>
-        <div className="coupon-input-container">
-          <input
-            type="text"
-            placeholder="Enter coupon code"
-            value={couponCode}
-            onChange={handleCouponCodeChange}
-          />
-          <button onClick={validateCouponCode}>Apply</button>
-        </div>
-        {couponError && <p className="coupon-error">{couponError}</p>}
-      </div>
       <div className="order-summary">
         <h3>Order Summary</h3>
         <div className="summary-item">
           <span>Subtotal:</span>
-          <span>${selectedItems.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)}</span>
+          <span>
+            ${selectedItems.reduce((total, item) => {
+              const maintenancePlanCost = item.maintenancePlan !== 'None' ? parseFloat(item.product.maintenancePlans.find((plan) => plan.title === item.maintenancePlan).cost) : 0;
+              return total + (item.product.price + maintenancePlanCost) * item.quantity;
+            }, 0).toFixed(2)}
+          </span>
         </div>
         <div className="summary-item">
           <span>Tax ({taxRate * 100}%):</span>
-          <span>${(selectedItems.reduce((total, item) => total + (item.price * item.quantity), 0) * taxRate).toFixed(2)}</span>
+          <span>
+            ${(selectedItems.reduce((total, item) => {
+              const maintenancePlanCost = item.maintenancePlan !== 'None' ? parseFloat(item.product.maintenancePlans.find((plan) => plan.title === item.maintenancePlan).cost) : 0;
+              return total + (item.product.price + maintenancePlanCost) * item.quantity;
+            }, 0) * taxRate).toFixed(2)}
+          </span>
         </div>
         <div className="summary-item">
           <span>Delivery Charge:</span>
-          <span>${deliveryCharge}</span>
+          <span>${deliveryCharge.toFixed(2)}</span>
         </div>
-        {discount > 0 && (
-          <div className="summary-item">
-            <span>Discount ({discount}%):</span>
-            <span>-${(selectedItems.reduce((total, item) => total + (item.price * item.quantity), 0) * (discount / 100)).toFixed(2)}</span>
-          </div>
-        )}
         <div className="summary-item total">
           <span>Total Cost:</span>
-          <span>${(
-            selectedItems.reduce((total, item) => total + (item.price * item.quantity), 0) +
-            selectedItems.reduce((total, item) => total + (item.price * item.quantity), 0) * taxRate +
-            deliveryCharge -
-            selectedItems.reduce((total, item) => total + (item.price * item.quantity), 0) * (discount / 100)
-          ).toFixed(2)}</span>
+          <span>
+            ${(selectedItems.reduce((total, item) => {
+              const maintenancePlanCost = item.maintenancePlan !== 'None' ? parseFloat(item.product.maintenancePlans.find((plan) => plan.title === item.maintenancePlan).cost) : 0;
+              return total + (item.product.price + maintenancePlanCost) * item.quantity;
+            }, 0) + selectedItems.reduce((total, item) => {
+              const maintenancePlanCost = item.maintenancePlan !== 'None' ? parseFloat(item.product.maintenancePlans.find((plan) => plan.title === item.maintenancePlan).cost) : 0;
+              return total + (item.product.price + maintenancePlanCost) * item.quantity;
+            }, 0) * taxRate + deliveryCharge).toFixed(2)}
+          </span>
         </div>
       </div>
       <button onClick={handleProceedToPayment}>Proceed to Payment</button>

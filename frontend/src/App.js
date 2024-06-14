@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
-import CategoryProductsPage from './pages/CategoryProductsPage';
+import SubCategoryProductsPage from './pages/SubCategoryProductsPage';
 import ViewAllPage from './pages/viewAllPage';
 import HomePage from './pages/HomePage';
 import CartPage from './pages/CartPage';
@@ -9,7 +9,7 @@ import CheckoutPage from './pages/CheckoutPage';
 import IndividualProductPage from './pages/IndividualProductPage';
 import PaymentPage from './pages/PaymentPage';
 import CustomerOrdersPage from './pages/CustomerOrdersPage';
-import ForgetPasswordPage  from './pages/ForgetPasswordPage';
+import ForgetPasswordPage from './pages/ForgetPasswordPage';
 import AdminLoginPage from './pages/AdminLoginPage';
 import AdminHomePage from './pages/AdminHomePage';
 import AdminCategoryPage from './pages/AdminCategoryPage';
@@ -33,6 +33,7 @@ const App = () => {
         const currentTime = Date.now() / 1000;
         if (decodedToken.exp < currentTime) {
           localStorage.removeItem('token');
+          localStorage.removeItem('cartItems');
           navigate('/login');
         }
       }
@@ -44,7 +45,6 @@ const App = () => {
           localStorage.removeItem('admin_token');
           navigate('/admin/login');
         }
-        
       }
     };
 
@@ -60,7 +60,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path="/home" element={<HomePage />} />
-        <Route path="/category/:categoryId" element={<CategoryProductsPage />} />
+        <Route path="/products/:subcategoryId" element={<SubCategoryProductsPage />} />
         <Route path="/view-all-products" element={<ViewAllPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/profile" element={<ProfilePage />} />
@@ -74,7 +74,7 @@ const App = () => {
         <Route path="/admin/categories" element={<AdminCategoryPage />} />
         <Route path="/admin/products" element={<AdminProductsPage />} />
         <Route path="/admin/orders" element={<AdminHandleOrdersPage />} />
-        <Route path="/admin/product/:productId" element={<AdminProductViewPage />} />
+        <Route path="/admin/product/edit/:productId" element={<AdminProductViewPage />} />
         <Route path="/order/:orderId" element={<ViewOrderPage />} />
         <Route path="/signup" element={<SignUpFormPage />} />
         <Route path="/login" element={<SignInFormPage />} />

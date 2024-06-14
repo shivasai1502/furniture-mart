@@ -40,6 +40,12 @@
   margin-bottom: 5px;
 }
 
+.item-maintenance-plan {
+  font-size: 16px;
+  color: #888;
+  margin-bottom: 5px;
+}
+
 .item-quantity {
   font-size: 16px;
   color: #888;
@@ -247,45 +253,6 @@
   border-radius: 4px;
   margin-top: 10px;
   margin-left: 25px;
-}
-
-.coupon-code {
-  margin-bottom: 30px;
-}
-
-.coupon-code h3 {
-  font-size: 20px;
-  margin-bottom: 10px;
-}
-
-.coupon-input-container {
-  display: flex;
-  align-items: center;
-}
-
-.coupon-input-container input[type="text"] {
-  flex: 1;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-right: 10px;
-}
-
-.coupon-input-container button {
-  padding: 10px 20px;
-  font-size: 14px;
-  background-color: #583442;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.coupon-error {
-  color: red;
-  margin-top: 5px;
-  font-size: 14px;
 }
 
 .order-summary {

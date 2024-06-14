@@ -19,8 +19,6 @@ subcategory_schema = {
 
 
 
-# ... (existing code remains the same)
-
 @admin_subcategory_bp.route('/all-in', methods=['GET'])
 @token_required
 def get_subcategories_in(current_user):
@@ -36,7 +34,6 @@ def get_subcategories_in(current_user):
         print(f"Error fetching subcategories: {str(e)}")
         return jsonify({'error': 'An error occurred while fetching subcategories'}), 500
 
-# ... (remaining code remains the same)
 
 @admin_subcategory_bp.route('/all', methods=['GET'])
 @token_required

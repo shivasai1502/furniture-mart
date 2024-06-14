@@ -140,11 +140,14 @@ const Payment = () => {
 
       const orderData = {
         items: selectedItems.map((item) => ({
-          _id: item._id,
+          _id: item.product._id,
           quantity: item.quantity,
+          maintenancePlan: item.maintenancePlan,
+          maintenanceCost: item.product.maintenancePlans.find((plan) => plan.title === item.maintenancePlan)?.cost || 0,
         })),
         cost: totalCost,
         tax: location.state.tax,
+        deliveryCharge: location.state.deliveryCharge,
         discount: location.state.discount,
         cardDetails,
         phoneNumber,
@@ -160,16 +163,15 @@ const Payment = () => {
       });
 
       // Delete selected items from the cart
-      const selectedProductIds = selectedItems.map((item) => item._id);
-      await axios.delete('http://localhost:5000/api/cart/delete', {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        data: {
-          product_ids: selectedProductIds,
-        },
-      });
+      const updatedCartItems = JSON.parse(localStorage.getItem('cartItems')).filter(
+        (item) =>
+          !selectedItems.some(
+            (selectedItem) =>
+              selectedItem.product._id === item.product._id &&
+              selectedItem.maintenancePlan === item.maintenancePlan
+          )
+      );
+      localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
 
       // Display success message
       setSuccessMessage('Payment successful!');

@@ -24,48 +24,50 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('cartItems');
     navigate('/home');
   };
 
   return (
-    <nav className="navbar">
-      <Link to="/">
-        <img src={Logo} alt="Company Logo" />
-      </Link>
-      <ul>
-        <li className="dropdown">
-          <Link>Shop</Link>
-          <div className="dropdown-content">
-            {categories.map((category) => (
-              <a key={category._id} href={`/category/${category.link}`}>
-                {category.CategoryName}
-              </a>
-            ))}
-          </div>
+<nav className="navbar">
+  <Link to="/">
+    <img src={Logo} alt="Company Logo" />
+  </Link>
+  <ul>
+    <li className="dropdown">
+      <Link>Shop</Link>
+      <div className="dropdown-content">
+        {categories.map((category) => (
+          <a key={category._id} href={`/category/${category.link}`}>
+            {category.CategoryName}
+          </a>
+        ))}
+      </div>
+    </li>
+    <li>
+      <Link to="/cart">Cart</Link>
+    </li>
+    {token ? (
+      <>
+        <li>
+          <Link to="/profile">Profile</Link>
         </li>
         <li>
-          <Link to="/cart">Cart</Link>
+          <Link to="/customer-orders">Orders</Link>
         </li>
-        {token ? (
-          <li className="dropdown">
-            <Link>Account</Link>
-            <div className="dropdown-content">
-              <Link to="/profile">Profile</Link>
-              <Link to="/customer-orders">Orders</Link>
-              <a href="/login" onClick={handleLogout}>
-                Sign Out
-              </a>
-            </div>
-          </li>
-        ) : (
-          <>
-            <li>
-              <Link to="/login">SignIn/SignUp</Link>
-            </li>
-          </>
-        )}
-      </ul>
-    </nav>
+        <li>
+          <a href="/login" onClick={handleLogout}>
+            Sign Out
+          </a>
+        </li>
+      </>
+    ) : (
+      <li>
+        <Link to="/login">SignIn/SignUp</Link>
+      </li>
+    )}
+  </ul>
+</nav>
   );
 };
 

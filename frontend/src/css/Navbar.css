@@ -1,58 +1,58 @@
 /* Header styles */
 .navbar {
-  background-color: #333; /* Dark gray background (close to black) */
-  display: flex; /* Use flexbox for layout */
-  justify-content: space-between; /* Space evenly between children */
-  align-items: center; /* Center items vertically */
-  box-shadow: 0px 2.98256px 7.4564px rgba(255, 255, 255, 0.1); /* White shadow with some transparency */
+  background-color: #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0px 2.98256px 7.4564px rgba(255, 255, 255, 0.1);
 }
 
 .navbar img {
-  width: 600px; /* Adjust logo width */
-  height: auto; /* Maintain aspect ratio */
-  margin-left: 70px; /* Add spacing to the right of the logo */
+  width: 600px;
+  height: auto;
+  margin-left: 70px;
 }
 
 .navbar ul {
-  list-style-type: none; /* Remove default list style */
-  margin: 0; /* Remove default margin */
-  padding: 0; /* Remove default padding */
-  display: flex; /* Use flexbox for layout */
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
 }
 
 .navbar ul li {
-  margin-right: 50px; /* Add spacing between navigation items */
-  bottom: 0; /* Align items to the bottom */
+  margin-right: 50px;
+  bottom: 0;
 }
 
 .navbar ul li:last-child {
-  margin-right: 100px; /* Remove margin from the last navigation item */
+  margin-right: 100px;
 }
 
 .navbar ul li a {
-  text-decoration: none; /* Remove underline from links */
-  color: #fff; /* Set link color to white */
-  font-size: 18px; /* Adjust font size */
-  font-weight: bold; /* Set font weight to bold */
+  text-decoration: none;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 /* Dropdown styles */
 .dropdown-content {
-  display: none; /* Hide dropdown content by default */
-  position: absolute; /* Position dropdown absolutely */
+  display: none;
+  position: absolute;
   margin-top: 25px;
-  background-color: #333; /* Black background */
-  min-width: 300px; /* Set minimum width */
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Add shadow */
-  z-index: 1; /* Ensure dropdown appears above other content */
+  background-color: #333;
+  min-width: 300px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
 }
 
 .dropdown-content a {
-  color: #fff; /* Set link color to white */
-  padding: 8px 16px; /* Add padding around links */
-  display: block; /* Display links as block elements */
+  color: #fff;
+  padding: 8px 16px;
+  display: block;
 }
 
 .dropdown:hover .dropdown-content {
-  display: block; /* Display dropdown content on hover */
+  display: block;
 }

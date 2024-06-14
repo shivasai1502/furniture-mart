@@ -79,7 +79,7 @@ const AdminProductForm = ({ categories, onSubmit, onCancel }) => {
   };
 
   const handleAddPlan = () => {
-    setMaintenancePlans([...maintenancePlans, { title: '', description: '' }]);
+    setMaintenancePlans([...maintenancePlans, { title: '', description: '', cost: '' }]);
   };
 
   const handleRemovePlan = (index) => {
@@ -253,6 +253,15 @@ const AdminProductForm = ({ categories, onSubmit, onCancel }) => {
                     onChange={(e) => handlePlanChange(index, 'description', e.target.value)}
                     className="admin-product-form-textarea"
                   ></textarea>
+                </div>
+                <div className="admin-product-form-group">
+                  <label>Cost:</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    value={plan.cost}
+                    onChange={(e) => handlePlanChange(index, 'cost', e.target.value)}
+                  />
                 </div>
                 <button type="button" onClick={() => handleRemovePlan(index)}>
                   Remove Plan

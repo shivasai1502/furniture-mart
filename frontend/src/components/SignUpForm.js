@@ -4,23 +4,48 @@ import { useNavigate } from 'react-router-dom';
 import '../css/SignUp.css';
 
 const SignUpForm = () => {
-  const [firstname, setFirstname] = useState('');
-  const [lastname, setLastname] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [dateOfBirth, setDateOfBirth] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [addressLine1, setAddressLine1] = useState('');
-  const [addressLine2, setAddressLine2] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [zipcode, setZipcode] = useState('');
+  const [formData, setFormData] = useState({
+    firstname: '',
+    lastname: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    dateOfBirth: '',
+    phoneNumber: '',
+    addressLine1: '',
+    addressLine2: '',
+    city: '',
+    state: '',
+    zipcode: '',
+  });
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [id]: value,
+    }));
+  };
+
   const handleRegistration = async (e) => {
     e.preventDefault();
+
+    const {
+      firstname,
+      lastname,
+      email,
+      password,
+      confirmPassword,
+      dateOfBirth,
+      phoneNumber,
+      addressLine1,
+      addressLine2,
+      city,
+      state,
+      zipcode,
+    } = formData;
 
     if (!validateName(firstname) || !validateName(lastname)) {
       setError('Names must contain only alphabets');
@@ -89,27 +114,27 @@ const SignUpForm = () => {
       <form onSubmit={handleRegistration} className="signup-form">
         <div className="signup-input-row">
           <div className="signup-input-group">
-            <label htmlFor="first_name" className="signup-label">
+            <label htmlFor="firstname" className="signup-label">
               First Name:
             </label>
             <input
               type="text"
-              id="first_name"
-              value={firstname}
-              onChange={(e) => setFirstname(e.target.value)}
+              id="firstname"
+              value={formData.firstname}
+              onChange={handleChange}
               required
               className="signup-input"
             />
           </div>
           <div className="signup-input-group">
-            <label htmlFor="last_name" className="signup-label">
+            <label htmlFor="lastname" className="signup-label">
               Last Name:
             </label>
             <input
               type="text"
-              id="last_name"
-              value={lastname}
-              onChange={(e) => setLastname(e.target.value)}
+              id="lastname"
+              value={formData.lastname}
+              onChange={handleChange}
               required
               className="signup-input"
             />
@@ -122,35 +147,35 @@ const SignUpForm = () => {
           <input
             type="email"
             id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={formData.email}
+            onChange={handleChange}
             required
             className="signup-input"
           />
         </div>
         <div className="signup-input-row">
           <div className="signup-input-group">
-            <label htmlFor="date_of_birth" className="signup-label">
+            <label htmlFor="dateOfBirth" className="signup-label">
               Date of Birth:
             </label>
             <input
               type="date"
-              id="date_of_birth"
-              value={dateOfBirth}
-              onChange={(e) => setDateOfBirth(e.target.value)}
+              id="dateOfBirth"
+              value={formData.dateOfBirth}
+              onChange={handleChange}
               required
               className="signup-input"
             />
           </div>
           <div className="signup-input-group">
-            <label htmlFor="phone_number" className="signup-label">
+            <label htmlFor="phoneNumber" className="signup-label">
               Phone Number:
             </label>
             <input
               type="tel"
-              id="phone_number"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
+              id="phoneNumber"
+              value={formData.phoneNumber}
+              onChange={handleChange}
               required
               className="signup-input"
             />
@@ -163,48 +188,48 @@ const SignUpForm = () => {
           <input
             type="password"
             id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={formData.password}
+            onChange={handleChange}
             required
             className="signup-input"
           />
         </div>
         <div className="signup-input-group">
-          <label htmlFor="confirm_password" className="signup-label">
+          <label htmlFor="confirmPassword" className="signup-label">
             Confirm Password:
           </label>
           <input
             type="password"
-            id="confirm_password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            id="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
             required
             className="signup-input"
           />
         </div>
         <div className="signup-input-row">
           <div className="signup-input-group">
-            <label htmlFor="address_line_1" className="signup-label">
+            <label htmlFor="addressLine1" className="signup-label">
               Address Line 1:
             </label>
             <input
               type="text"
-              id="address_line_1"
-              value={addressLine1}
-              onChange={(e) => setAddressLine1(e.target.value)}
+              id="addressLine1"
+              value={formData.addressLine1}
+              onChange={handleChange}
               required
               className="signup-input"
             />
           </div>
           <div className="signup-input-group">
-            <label htmlFor="address_line_2" className="signup-label">
+            <label htmlFor="addressLine2" className="signup-label">
               Address Line 2:
             </label>
             <input
               type="text"
-              id="address_line_2"
-              value={addressLine2}
-              onChange={(e) => setAddressLine2(e.target.value)}
+              id="addressLine2"
+              value={formData.addressLine2}
+              onChange={handleChange}
               className="signup-input"
             />
           </div>
@@ -217,8 +242,8 @@ const SignUpForm = () => {
             <input
               type="text"
               id="city"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
+              value={formData.city}
+              onChange={handleChange}
               required
               className="signup-input"
             />
@@ -230,8 +255,8 @@ const SignUpForm = () => {
             <input
               type="text"
               id="state"
-              value={state}
-              onChange={(e) => setState(e.target.value)}
+              value={formData.state}
+              onChange={handleChange}
               required
               className="signup-input"
             />
@@ -243,8 +268,8 @@ const SignUpForm = () => {
             <input
               type="text"
               id="zipcode"
-              value={zipcode}
-              onChange={(e) => setZipcode(e.target.value)}
+              value={formData.zipcode}
+              onChange={handleChange}
               required
               className="signup-input"
             />

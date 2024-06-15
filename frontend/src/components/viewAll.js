@@ -6,7 +6,7 @@ function ViewAll() {
 
   return (
     <Container className="container-view">
-        <a href="/category/view-all-products" className="view-all-link">
+        <a href="/products/view-all-products" className="view-all-link">
           <div className="view-all-text">Click Here to View All Types of Toys</div>
         </a>
     </Container>

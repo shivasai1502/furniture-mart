@@ -11,7 +11,7 @@ const AdminHandleOrders = () => {
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [activeTab, setActiveTab] = useState('Pending');
-  const [editItem, setEditItem] = useState(null);
+  const [editItem, setEditItem] = useState({});
 
   useEffect(() => {
     const admin_token = localStorage.getItem('admin_token');
@@ -59,24 +59,43 @@ const AdminHandleOrders = () => {
       updatedOrder.items[itemIndex][field] = value;
       setSelectedOrder(updatedOrder);
     }
-    setEditItem({ itemId, field, value });
+    setEditItem((prevState) => ({
+      ...prevState,
+      [itemId]: {
+        ...(prevState[itemId] || {}),
+        [field]: value,
+      },
+    }));
   };
 
   const saveUpdate = async (itemId) => {
     try {
+      const updates = editItem[itemId];
       await axios.put(
         `http://localhost:5000/api/admin/handleorders/update/${selectedOrder._id}`,
-        { itemId, field: editItem.field, value: editItem.value },
+        { itemId, updates },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('admin_token')}`,
           },
         }
       );
-      setEditItem(null);
+      setEditItem((prevState) => {
+        const { [itemId]: _, ...restState } = prevState;
+        return restState;
+      });
       toast.success('Order updated successfully');
+      window.location.reload();
       fetchOrders();
-      window.location.reload(); // Refresh the page
+      setSelectedOrder((prevOrder) => ({
+        ...prevOrder,
+        items: prevOrder.items.map((item) => {
+          if (item.product_id === itemId) {
+            return { ...item, ...updates };
+          }
+          return item;
+        }),
+      }));
     } catch (error) {
       console.error('Error updating order:', error);
       toast.error('Failed to update order');
@@ -190,7 +209,7 @@ const AdminHandleOrders = () => {
           <p><strong>Order ID:</strong> {selectedOrder._id}</p>
           <p><strong>Total Cost:</strong> {selectedOrder.Totalcost.toFixed(2)}</p>
           <p><strong>Tax:</strong> {selectedOrder.tax.toFixed(2)}</p>
-          <p><strong>Discount:</strong> {selectedOrder.discount.toFixed(2)}</p>
+          <p><strong>Delivery Charge:</strong> {selectedOrder.deliveryCharge.toFixed(2)}</p>
           <p><strong>Payment ID:</strong> {selectedOrder.paymentId}</p>
           <p><strong>Phone Number:</strong> {selectedOrder.phoneNumber}</p>
           <p>
@@ -205,6 +224,7 @@ const AdminHandleOrders = () => {
                 <th>S.No</th>
                 <th>Product</th>
                 <th>Quantity</th>
+                <th>Maintenance Plan</th>
                 <th>Delivery Status</th>
                 <th>Estimated Delivery Date</th>
                 <th>Delivery Date</th>
@@ -213,50 +233,49 @@ const AdminHandleOrders = () => {
               </tr>
             </thead>
             <tbody>
-              {selectedOrder.items
-                .filter((item) => item.deliveryStatus === activeTab)
-                .map((item, index) => (
-                  <tr key={item.product_id}>
-                    <td>{index + 1}</td>
-                    <td>
-                      <span>{item.name}</span>
-                    </td>
-                    <td>{item.quantity}</td>
-                    <td>
-                      <select
-                        value={item.deliveryStatus}
-                        onChange={(e) => handleUpdateOrder(item.product_id, 'deliveryStatus', e.target.value)}
-                      >
-                        <option value="Pending">Pending</option>
-                        <option value="Transit">Transit</option>
-                        <option value="Delivered">Delivered</option>
-                        <option value="Cancelled">Cancelled</option>
-                      </select>
-                    </td>
-                    <td>
-                      <input
-                        type="date"
-                        value={item.EstimatedDeliveryDate}
-                        onChange={(e) => handleUpdateOrder(item.product_id, 'EstimatedDeliveryDate', e.target.value)}
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="date"
-                        value={item.DeliveryDate}
-                        onChange={(e) => handleUpdateOrder(item.product_id, 'DeliveryDate', e.target.value)}
-                      />
-                    </td>
-                    <td>{item.Cost.toFixed(2)}</td>
-                    <td>
-                      {editItem && editItem.itemId === item.product_id ? (
-                        <button className="admin-handle-orders-button" onClick={() => saveUpdate(item.product_id)}>
-                          Save
-                        </button>
-                      ) : null}
-                    </td>
-                  </tr>
-                ))}
+              {selectedOrder.items.map((item, index) => (
+                <tr key={item.product_id}>
+                  <td>{index + 1}</td>
+                  <td>
+                    <span>{item.name}</span>
+                  </td>
+                  <td>{item.quantity}</td>
+                  <td>{item.maintenancePlan ? item.maintenancePlan.title : 'N/A'}</td>
+                  <td>
+                    <select
+                      value={item.deliveryStatus}
+                      onChange={(e) => handleUpdateOrder(item.product_id, 'deliveryStatus', e.target.value)}
+                    >
+                      <option value="Pending">Pending</option>
+                      <option value="Transit">Transit</option>
+                      <option value="Delivered">Delivered</option>
+                      <option value="Cancelled">Cancelled</option>
+                    </select>
+                  </td>
+                  <td>
+                    <input
+                      type="date"
+                      value={item.EstimatedDeliveryDate}
+                      onChange={(e) => handleUpdateOrder(item.product_id, 'EstimatedDeliveryDate', e.target.value)}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="date"
+                      value={item.DeliveryDate}
+                      onChange={(e) => handleUpdateOrder(item.product_id, 'DeliveryDate', e.target.value)}
+                    />
+                  </td>
+                  <td>{item.Cost.toFixed(2)}</td>
+                  <td>
+                    {editItem[item.product_id] ? (
+                      <button className="admin-handle-orders-button" onClick={() => saveUpdate(item.product_id)}>
+                        Save
+                      </button>
+                    ) : null}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

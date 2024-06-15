@@ -11,13 +11,23 @@ fs = GridFS(db)
 
 @products_bp.route('/subcategory/<subcategory_id>', methods=['GET'])
 def get_products_by_subcategory(subcategory_id):
-    products = list(db.products.find({'subcategory': ObjectId(subcategory_id)}))
-    for product in products:
-        product['_id'] = str(product['_id'])
-        product['category'] = str(product['category'])
-        product['subcategory'] = str(product['subcategory'])
-        product['image_id'] = str(product['image_id'])
-    return json.dumps(products, cls=JSONEncoder), 200
+    try:
+        if subcategory_id == 'view-all-products':
+            products = list(db.products.find({}))
+        else:
+            products = list(db.products.find({'subcategory': ObjectId(subcategory_id)}))
+
+        for product in products:
+            product['_id'] = str(product['_id'])
+            product['category'] = str(product['category'])
+            product['subcategory'] = str(product['subcategory'])
+            product['image_id'] = str(product['image_id'])
+
+        return jsonify(products), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 @products_bp.route('/images/<image_id>', methods=['GET'])
 def get_product_image(image_id):

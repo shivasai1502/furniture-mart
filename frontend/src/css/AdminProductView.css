@@ -76,7 +76,7 @@
   border: none;
   font-size: 16px;
   color: #fff;
-  background-color: #583442;
+  background-color: #343432;
   cursor: pointer;
   transition: background-color 0.3s;
   display: flex;
@@ -84,7 +84,7 @@
 }
 
 .admin-product-view-form-actions button:last-child {
-  background-color: #583442;
+  background-color: #343432;
 }
 
 .admin-product-view-form-actions button svg {

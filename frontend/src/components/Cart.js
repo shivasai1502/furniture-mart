@@ -97,10 +97,10 @@ const CartPage = () => {
             </div>
             <div className="cart-actions">
               <button className="delete-button" onClick={handleDelete} disabled={selectedItems.length === 0}>
-                Delete Selected
+                Delete
               </button>
               <button className="checkout-button" onClick={handleCheckout} disabled={selectedItems.length === 0}>
-                Checkout Selected
+                Checkout
               </button>
             </div>
           </div>
@@ -111,3 +111,4 @@ const CartPage = () => {
 };
 
 export default CartPage;
+

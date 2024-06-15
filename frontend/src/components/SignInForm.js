@@ -58,10 +58,10 @@ const SignInForm = () => {
         </div>
         <div className="signin-links-container">
           <a href="/forget-password" className="signin-forgot-password-link">
-            Forget Password
+            <u>Forget Password</u>
           </a>
           <Link to="/signup" className="signin-register-link">
-            Register
+            <u>Register</u>
           </Link>
         </div>
         <button type="submit" className="signin-submit-button">

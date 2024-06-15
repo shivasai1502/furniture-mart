@@ -38,7 +38,7 @@
   
   .form-button-admin {
     padding: 10px;
-    background-color: #583442;
+    background-color: #343432;
     color: white;
     border: none;
     border-radius: 4px;
@@ -63,4 +63,5 @@
     background-color: #ccffcc;
     width: 50%;
     margin: 0 auto; /* Add this line to center the message */
+    margin-top: 20%;
   }

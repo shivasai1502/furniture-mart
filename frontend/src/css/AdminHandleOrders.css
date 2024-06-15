@@ -30,7 +30,7 @@
 }
 
 .admin-handle-orders-tab.active {
-  background-color: #583442;
+  background-color: #343432;
   color: #fff;
 }
 
@@ -60,7 +60,7 @@
 
 .admin-handle-orders-button {
   padding: 8px 12px;
-  background-color: #583442;
+  background-color: #343432;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -69,9 +69,6 @@
   font-weight: bold;
 }
 
-.admin-handle-orders-button:hover {
-  background-color: #6f4350;
-}
 
 .admin-handle-orders-details {
   margin-top: 20px;

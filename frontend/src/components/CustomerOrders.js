@@ -58,7 +58,7 @@ const CustomerOrder = () => {
                       </div>
                       <div className="customer-order-item-info">
                         <p className="customer-order-item-name">{item.name}</p>
-                        <p className="customer-order-item-quantity">Quantity: {item.quantity} ,  Delivery Status: {item.deliveryStatus}</p>
+                        <p className="customer-order-item-quantity">Quantity: {item.quantity} ,  Delivery Status: {item.deliveryStatus},  Maintenance Plan: {item.maintenancePlan}</p>
                       </div>
                     </li>
                   ))}

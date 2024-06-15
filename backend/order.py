@@ -114,6 +114,7 @@ def get_customer_orders(user):
                 'quantity': item['quantity'],
                 'image_id': product['image_id'],
                 'deliveryStatus': item['deliveryStatus'],
+                'maintenancePlan': item.get('maintenancePlan'),
             }
             order_items.append(order_item)
                     

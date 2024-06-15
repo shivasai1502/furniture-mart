@@ -52,7 +52,7 @@
 .signin-forgot-password-link,
 .signin-register-link {
   font-size: 16px;
-  color: #583442;
+  color: #343432;
   text-decoration: none;
 }
 
@@ -60,7 +60,7 @@
   width: 60%;
   padding: 10px;
   font-size: 20px;
-  background-color: #583442;
+  background-color: #343432;
   color: #fff;
   border: none;
   border-radius: 4px;

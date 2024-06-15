@@ -62,7 +62,7 @@
 
 .no-address {
   background-color: #f8d7da;
-  color: #721c24;
+  color: #343432;
   padding: 10px;
   border: 1px solid #f5c6cb;
   border-radius: 4px;
@@ -77,7 +77,7 @@
   margin-top: 10px;
   padding: 8px 16px;
   font-size: 14px;
-  background-color: #583442;
+  background-color: #343432;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -129,7 +129,7 @@
 }
 
 .address-option input:checked ~ .checkmark {
-  background-color: #583442;
+  background-color: #343432;
 }
 
 .checkmark:after {
@@ -215,7 +215,7 @@
 }
 
 .phone-number-option input:checked ~ .checkmark {
-  background-color: #583442;
+  background-color: #343432;
 }
 
 .phone-number-option .checkmark:after {
@@ -283,7 +283,7 @@
   width: 40%;
   padding: 10px;
   font-size: 16px;
-  background-color: #583442;
+  background-color: #343432;
   color: #fff;
   border: none;
   border-radius: 4px;

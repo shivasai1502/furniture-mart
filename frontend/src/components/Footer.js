@@ -6,12 +6,6 @@ const Footer = () => {
         <footer className="footer">
             <div className="footer-container">
                 <div className="footer-column">
-                    <h3>Shop Address</h3>
-                    <p>123 Toy Street</p>
-                    <p>Cityville, Toyland</p>
-                    <p>Country</p>
-                </div>
-                <div className="footer-column">
                     <h3>Contact Details</h3>
                     <p>Email: info@example.com</p>
                     <p>Phone: +123-456-7890</p>

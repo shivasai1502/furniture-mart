@@ -15,7 +15,7 @@
 .signup-form {
   width: 100%;
   max-width: 800px;
-  padding: 10px;
+  padding: 20px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -31,7 +31,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-bottom: 5px;
+  margin-bottom: 20px; /* Added margin-bottom for spacing */
 }
 
 .signup-label {
@@ -48,7 +48,15 @@
   border-radius: 4px;
   outline: none;
   transition: border-color 0.3s ease;
-  margin-right: 20px;
+  margin-bottom: 10px; /* Space between each text box vertically */
+}
+
+.signup-input:focus {
+  border-color: #583442;
+}
+
+.signup-input-group:not(:last-child) {
+  margin-right: 20px; /* Space between side-by-side text boxes */
 }
 
 .signup-button {
@@ -57,12 +65,18 @@
   font-size: 18px;
   font-weight: bold;
   color: #fff;
-  background-color: #583442;
+  background-color: #343432;
   border: none;
   border-radius: 4px;
+  margin: 20px auto 0; /* Center the button */
+  display: block;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-
+.signup-button:hover {
+  background-color: #6a4a55;
+}
 
 .signup-error-message {
   color: #dc3545;

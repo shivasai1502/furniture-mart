@@ -81,7 +81,7 @@ const ViewOrder = () => {
             />
             <div className="view-order-item-details">
               <p className="view-order-toy-name">{item.name}</p>
-              <p><strong>Quantity:</strong> {item.quantity}</p>
+              <p><strong>Quantity:</strong> {item.quantity}, <strong>Maintenance Plan:</strong> {item.maintenancePlan}</p>
               {item.deliveryStatus === 'Pending' && (
                 <>
                   <p><strong>Estimated Date of Delivery:</strong> {item.EstimatedDeliveryDate}</p>

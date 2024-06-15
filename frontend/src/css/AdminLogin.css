@@ -1,67 +1,83 @@
 .admin-password-container-admin {
-    max-width: 500px;
-    margin: 0 auto;
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #f9f9f9;
-  }
-  
-  .admin-password-title-admin {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .admin-password-form-admin {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .form-group-admin {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-  }
-  
-  .form-label-admin {
-    width: 150px;
-    font-weight: bold;
-    text-align: center;
-  }
-  
-  .form-input-admin {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 300px;
-  }
-  
-  .form-button-admin {
-    padding: 10px;
-    background-color: #343432;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 30%;
-    margin: 0 auto; /* Add this line to center the button */
-  }
-  
-  .message-admin {
-    margin-top: 10px;
-    padding: 10px;
-    border-radius: 4px;
-  }
-  
-  .message-admin.error {
-    color: red;
-    background-color: #ffcccc;
-  }
-  
-  .message-admin.success {
-    color: green;
-    background-color: #ccffcc;
-    width: 50%;
-    margin: 0 auto; /* Add this line to center the message */
-    margin-top: 20%;
-  }
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 30px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.admin-password-title-admin {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 24px;
+  color: #343432;
+}
+
+.admin-password-form-admin {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group-admin {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.form-label-admin {
+  width: 180px;
+  font-weight: bold;
+  text-align: right;
+  margin-right: 20px;
+  color: #343432;
+  font-size: 18px;
+}
+
+.form-input-admin {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #343432;
+}
+
+.form-button-admin {
+  padding: 12px 24px;
+  background-color: #343432;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  width: 50%;
+  margin: 0 auto;
+  transition: background-color 0.3s ease;
+}
+
+.form-button-admin:hover {
+  background-color: #222222;
+}
+
+.message-admin {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.message-admin.error {
+  color: red;
+  background-color: #ffcccc;
+}
+
+.message-admin.success {
+  color: green;
+  background-color: #ccffcc;
+  width: 60%;
+  margin: 30px auto;
+}

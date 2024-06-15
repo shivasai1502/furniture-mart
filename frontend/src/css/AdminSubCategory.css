@@ -1,12 +1,12 @@
 .admin-subcategory-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 30px;
 }
 
 .admin-subcategory-container h2 {
-  font-size: 24px;
-  margin-bottom: 20px;
+  font-size: 28px;
+  margin-bottom: 30px;
   color: #333;
   text-align: center;
 }
@@ -14,11 +14,11 @@
 .admin-subcategory-button {
   display: flex;
   align-items: center;
-  padding: 10px 20px;
-  margin-bottom: 20px;
+  padding: 12px 24px;
+  margin-bottom: 30px;
   border-radius: 4px;
   border: none;
-  font-size: 16px;
+  font-size: 18px;
   color: #fff;
   background-color: #343432;
   cursor: pointer;
@@ -26,61 +26,66 @@
 }
 
 .admin-subcategory-button svg {
-  margin-right: 5px;
+  margin-right: 8px;
+  font-size: 20px;
 }
 
 .admin-subcategory-form,
 .admin-subcategory-edit-form {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   background-color: #f5f5f5;
   border-radius: 4px;
-  padding: 20px;
+  padding: 30px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .admin-subcategory-form-group {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .admin-subcategory-form-group label {
   display: block;
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   color: #555;
+  font-size: 18px;
 }
 
 .admin-subcategory-form-group input[type='text'],
 .admin-subcategory-form-group select,
 .admin-subcategory-form-group input[type='file'] {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   border-radius: 4px;
   border: 1px solid #ccc;
-  font-size: 16px;
+  font-size: 18px;
   color: #333;
 }
 
 .admin-subcategory-form-actions {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .admin-subcategory-form-actions button {
-  margin-left: 10px;
+  margin-left: 15px;
+  padding: 12px 24px;
+  font-size: 18px;
 }
 
 .admin-subcategory-error-message {
   color: red;
-  margin-top: 10px;
+  margin-top: 15px;
+  font-size: 16px;
 }
 
 .admin-subcategory-category-list {
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .admin-subcategory-category-item {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   background-color: #f5f5f5;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -90,7 +95,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px;
+  padding: 15px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
@@ -101,24 +106,24 @@
 
 .admin-subcategory-category-header h3 {
   margin: 0;
-  font-size: 18px;
+  font-size: 20px;
   color: #333;
 }
 
 .admin-subcategory-category-header span {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: bold;
   color: #555;
 }
 
 .admin-subcategory-list {
-  padding: 10px;
+  padding: 15px;
 }
 
 .admin-subcategory-item {
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 15px;
   transition: background-color 0.3s;
 }
 
@@ -134,13 +139,14 @@
 }
 
 .admin-subcategory-number {
-  margin-right: 5px;
+  margin-right: 8px;
   font-weight: bold;
   color: #555;
+  font-size: 18px;
 }
 
 .admin-subcategory-name {
-  font-size: 16px;
+  font-size: 18px;
   color: #333;
 }
 
@@ -152,5 +158,7 @@
 .admin-subcategory-edit-form input[type='text'],
 .admin-subcategory-edit-form select,
 .admin-subcategory-edit-form input[type='file'] {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  padding: 12px;
+  font-size: 18px;
 }

@@ -154,7 +154,15 @@ def delete_product(current_user, product_id):
     try:
         product = db.products.find_one({'_id': ObjectId(product_id)})
         if product:
+            subcategory_id = product['subcategory']
             db.products.delete_one({'_id': ObjectId(product_id)})
+
+            # Remove the product ID from the related subcategory's products array
+            db.subcategories.update_one(
+                {'_id': ObjectId(subcategory_id)},
+                {'$pull': {'products': product_id}}
+            )
+
             return jsonify({'message': 'Product deleted successfully'}), 200
         else:
             return jsonify({'error': 'Product not found'}), 404

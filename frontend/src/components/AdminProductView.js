@@ -12,18 +12,19 @@ const AdminProductView = () => {
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
   const [name, setName] = useState('');
+  const [brand, setBrand] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
-  const [image, setImage] = useState(null);
+  const [images, setImages] = useState([]);
   const [category, setCategory] = useState('');
   const [subcategory, setSubcategory] = useState('');
   const [features, setFeatures] = useState('');
-  const [weights, setWeights] = useState('');
-  const [dimensions, setDimensions] = useState('');
+  const [dimensions, setDimensions] = useState([]);
   const [specification, setSpecification] = useState('');
   const [hasMaintenance, setHasMaintenance] = useState(false);
   const [maintenancePlans, setMaintenancePlans] = useState([]);
   const [additionalInfo, setAdditionalInfo] = useState('');
+  const [stockQuantity, setStockQuantity] = useState('');
   const [error, setError] = useState('');
 
   const fetchProduct = useCallback(async () => {
@@ -36,17 +37,19 @@ const AdminProductView = () => {
       const productData = response.data;
       setProduct(productData);
       setName(productData.name);
+      setBrand(productData.brand);
       setDescription(productData.description);
       setPrice(productData.price);
+      setImages(productData.images);
       setCategory(productData.category);
       setSubcategory(productData.subcategory);
       setFeatures(productData.features);
-      setWeights(productData.weights);
       setDimensions(productData.dimensions);
       setSpecification(productData.specification);
       setHasMaintenance(productData.hasMaintenance);
       setMaintenancePlans(productData.maintenancePlans);
       setAdditionalInfo(productData.additionalInfo);
+      setStockQuantity(productData.stockQuantity);
     } catch (error) {
       console.error('Error fetching product:', error);
     }
@@ -102,20 +105,22 @@ const AdminProductView = () => {
     try {
       const formData = new FormData();
       formData.append('name', name);
+      formData.append('brand', brand);
       formData.append('description', description);
       formData.append('price', price);
-      if (image) {
-        formData.append('image', image);
-      }
+      images.forEach((image) => {
+        formData.append('colors', image.color);
+        formData.append('images', image.file);
+      });
       formData.append('category', category);
       formData.append('subcategory', subcategory);
       formData.append('features', features);
-      formData.append('weights', weights);
-      formData.append('dimensions', dimensions);
+      formData.append('dimensions', JSON.stringify(dimensions));
       formData.append('specification', specification);
       formData.append('hasMaintenance', hasMaintenance);
       formData.append('maintenancePlans', JSON.stringify(maintenancePlans));
       formData.append('additionalInfo', additionalInfo);
+      formData.append('stockQuantity', stockQuantity);
 
       await axios.put(`http://localhost:5000/api/admin/product/edit/${productId}`, formData, {
         headers: {
@@ -152,6 +157,38 @@ const AdminProductView = () => {
 
   const handleCancel = () => {
     navigate('/admin/products');
+  };
+
+  const handleAddImage = () => {
+    setImages([...images, { color: '', file: null }]);
+  };
+
+  const handleRemoveImage = (index) => {
+    const updatedImages = [...images];
+    updatedImages.splice(index, 1);
+    setImages(updatedImages);
+  };
+
+  const handleImageChange = (index, field, value) => {
+    const updatedImages = [...images];
+    updatedImages[index][field] = value;
+    setImages(updatedImages);
+  };
+
+  const handleAddDimension = () => {
+    setDimensions([...dimensions, { label: '', value: '' }]);
+  };
+
+  const handleRemoveDimension = (index) => {
+    const updatedDimensions = [...dimensions];
+    updatedDimensions.splice(index, 1);
+    setDimensions(updatedDimensions);
+  };
+
+  const handleDimensionChange = (index, field, value) => {
+    const updatedDimensions = [...dimensions];
+    updatedDimensions[index][field] = value;
+    setDimensions(updatedDimensions);
   };
 
   const handleAddPlan = () => {
@@ -191,6 +228,17 @@ const AdminProductView = () => {
           />
         </div>
         <div className="admin-product-form-group">
+          <label htmlFor="brand">Brand:</label>
+          <input
+            type="text"
+            id="brand"
+            value={brand}
+            onChange={(e) => setBrand(e.target.value)}
+            placeholder="Enter brand name"
+            required
+          />
+        </div>
+        <div className="admin-product-form-group">
           <label htmlFor="price">Price:</label>
           <input
             type="number"
@@ -203,13 +251,34 @@ const AdminProductView = () => {
           />
         </div>
         <div className="admin-product-form-group">
-          <label htmlFor="image">Upload Image:</label>
-          <input
-            type="file"
-            id="image"
-            accept=".jpg,.jpeg,.png"
-            onChange={(e) => setImage(e.target.files[0])}
-          />
+          <label>Add Color & Image:</label>
+          <button type="button" onClick={handleAddImage}>
+            Add Image
+          </button>
+          {images.map((image, index) => (
+            <div key={index}>
+              <div className="admin-product-form-group">
+                <label>Color:</label>
+                <input
+                  type="text"
+                  value={image.color}
+                  onChange={(e) => handleImageChange(index, 'color', e.target.value)}
+                  placeholder="Enter color"
+                />
+              </div>
+              <div className="admin-product-form-group">
+                <label>Image:</label>
+                <input
+                  type="file"
+                  accept=".jpg,.jpeg,.png"
+                  onChange={(e) => handleImageChange(index, 'file', e.target.files[0])}
+                />
+              </div>
+              <button type="button" onClick={() => handleRemoveImage(index)}>
+                Remove Image
+              </button>
+            </div>
+          ))}
         </div>
         <div className="admin-product-form-group">
           <label htmlFor="category">Category:</label>
@@ -265,22 +334,33 @@ const AdminProductView = () => {
           ></textarea>
         </div>
         <div className="admin-product-form-group">
-          <label htmlFor="weights">Weights:</label>
-          <textarea
-            id="weights"
-            value={weights}
-            onChange={(e) => setWeights(e.target.value)}
-            className="admin-product-form-textarea"
-          ></textarea>
-        </div>
-        <div className="admin-product-form-group">
-          <label htmlFor="dimensions">Dimensions:</label>
-          <textarea
-            id="dimensions"
-            value={dimensions}
-            onChange={(e) => setDimensions(e.target.value)}
-            className="admin-product-form-textarea"
-          ></textarea>
+          <label>Weights & Dimensions:</label>
+          <button type="button" onClick={handleAddDimension}>
+            Add Label
+          </button>
+          {dimensions.map((dimension, index) => (
+            <div key={index}>
+              <div className="admin-product-form-group">
+                <label>Label:</label>
+                <input
+                  type="text"
+                  value={dimension.label}
+                  onChange={(e) => handleDimensionChange(index, 'label', e.target.value)}
+                />
+              </div>
+              <div className="admin-product-form-group">
+                <label>Value:</label>
+                <input
+                  type="text"
+                  value={dimension.value}
+                  onChange={(e) => handleDimensionChange(index, 'value', e.target.value)}
+                />
+              </div>
+              <button type="button" onClick={() => handleRemoveDimension(index)}>
+                Remove Dimension
+              </button>
+            </div>
+          ))}
         </div>
         <div className="admin-product-form-group">
           <label htmlFor="specification">Specification:</label>
@@ -347,7 +427,7 @@ const AdminProductView = () => {
                   </div>
                   <button type="button" onClick={() => handleRemovePlan(index)}>
                     Remove Plan
-                  </button>
+                    </button>
                 </div>
               ))}
             </div>
@@ -361,6 +441,17 @@ const AdminProductView = () => {
             onChange={(e) => setAdditionalInfo(e.target.value)}
             className="admin-product-form-textarea"
           ></textarea>
+        </div>
+        <div className="admin-product-form-group">
+          <label htmlFor="stockQuantity">Stock Quantity:</label>
+          <input
+            type="number"
+            id="stockQuantity"
+            value={stockQuantity}
+            onChange={(e) => setStockQuantity(e.target.value)}
+            placeholder="Enter stock quantity"
+            required
+          />
         </div>
         <div className="admin-product-view-form-actions">
           <button type="submit">

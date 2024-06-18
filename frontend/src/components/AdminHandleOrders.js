@@ -11,7 +11,6 @@ const AdminHandleOrders = () => {
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [activeTab, setActiveTab] = useState('Pending');
-  const [editItem, setEditItem] = useState({});
 
   useEffect(() => {
     const admin_token = localStorage.getItem('admin_token');
@@ -40,62 +39,47 @@ const AdminHandleOrders = () => {
       setSelectedOrder(null);
     } else {
       try {
-        const response = await axios.get(`http://localhost:5000/api/admin/handleorders/${orderId}`, {
+        const response = await axios.get(`http://localhost:5000/api/admin/handleorders/${orderId}?deliveryStatus=${activeTab}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('admin_token')}`,
           },
         });
-        setSelectedOrder(response.data);
+        const order = response.data;
+        setSelectedOrder(order);
       } catch (error) {
         console.error('Error fetching order details:', error);
       }
     }
   };
 
-  const handleUpdateOrder = async (itemId, field, value) => {
+  const handleUpdateOrder = (itemId, field, value) => {
     const updatedOrder = { ...selectedOrder };
     const itemIndex = updatedOrder.items.findIndex((item) => item.product_id === itemId);
     if (itemIndex !== -1) {
       updatedOrder.items[itemIndex][field] = value;
       setSelectedOrder(updatedOrder);
     }
-    setEditItem((prevState) => ({
-      ...prevState,
-      [itemId]: {
-        ...(prevState[itemId] || {}),
-        [field]: value,
-      },
-    }));
   };
 
-  const saveUpdate = async (itemId) => {
+  const saveUpdate = async () => {
     try {
-      const updates = editItem[itemId];
+      const updatedItems = selectedOrder.items.filter((item) =>
+        item.hasOwnProperty('deliveryStatus') ||
+        item.hasOwnProperty('EstimatedDeliveryDate') ||
+        item.hasOwnProperty('DeliveryDate')
+      );
       await axios.put(
         `http://localhost:5000/api/admin/handleorders/update/${selectedOrder._id}`,
-        { itemId, updates },
+        { items: updatedItems },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('admin_token')}`,
           },
         }
       );
-      setEditItem((prevState) => {
-        const { [itemId]: _, ...restState } = prevState;
-        return restState;
-      });
       toast.success('Order updated successfully');
-      window.location.reload();
+      setSelectedOrder(null);
       fetchOrders();
-      setSelectedOrder((prevOrder) => ({
-        ...prevOrder,
-        items: prevOrder.items.map((item) => {
-          if (item.product_id === itemId) {
-            return { ...item, ...updates };
-          }
-          return item;
-        }),
-      }));
     } catch (error) {
       console.error('Error updating order:', error);
       toast.error('Failed to update order');
@@ -113,16 +97,16 @@ const AdminHandleOrders = () => {
     const deliveredItems = order.items.filter((item) => item.deliveryStatus === 'Delivered');
 
     if (pendingItems.length > 0) {
-      acc.Pending.push(order);
+      acc.Pending.push({ ...order, items: pendingItems });
     }
     if (transitItems.length > 0) {
-      acc.Transit.push(order);
+      acc.Transit.push({ ...order, items: transitItems });
     }
     if (cancelledItems.length > 0) {
-      acc.Cancelled.push(order);
+      acc.Cancelled.push({ ...order, items: cancelledItems });
     }
-    if (deliveredItems.length === order.items.length) {
-      acc.Delivered.push(order);
+    if (deliveredItems.length > 0) {
+      acc.Delivered.push({ ...order, items: deliveredItems });
     }
 
     return acc;
@@ -130,7 +114,23 @@ const AdminHandleOrders = () => {
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
-    setSelectedOrder(null); // Close the displayed order details when changing tabs
+    setSelectedOrder(null);
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  const todayDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   };
 
   return (
@@ -170,7 +170,6 @@ const AdminHandleOrders = () => {
             <thead>
               <tr>
                 <th>Order ID</th>
-                <th>Customer Name</th>
                 <th>Total Cost</th>
                 <th>Order Time</th>
                 <th>Actions</th>
@@ -178,9 +177,8 @@ const AdminHandleOrders = () => {
             </thead>
             <tbody>
               {filteredOrders[activeTab].map((order) => (
-                <tr key={order._id}>
+                <tr key={`${order._id}-${activeTab}`}>
                   <td>{order._id}</td>
-                  <td>{order.customerName}</td>
                   <td>{order.Totalcost.toFixed(2)}</td>
                   <td>{new Date(order.orderTime).toLocaleString()}</td>
                   <td>
@@ -210,7 +208,6 @@ const AdminHandleOrders = () => {
           <p><strong>Total Cost:</strong> {selectedOrder.Totalcost.toFixed(2)}</p>
           <p><strong>Tax:</strong> {selectedOrder.tax.toFixed(2)}</p>
           <p><strong>Delivery Charge:</strong> {selectedOrder.deliveryCharge.toFixed(2)}</p>
-          <p><strong>Payment ID:</strong> {selectedOrder.paymentId}</p>
           <p><strong>Phone Number:</strong> {selectedOrder.phoneNumber}</p>
           <p>
             <strong>Address:</strong> {selectedOrder.address.address_line_1}, {selectedOrder.address.address_line_2},{' '}
@@ -222,62 +219,81 @@ const AdminHandleOrders = () => {
             <thead>
               <tr>
                 <th>S.No</th>
-                <th>Product</th>
+                <th>Product Name</th>
+                <th>Product Color</th>
                 <th>Quantity</th>
                 <th>Maintenance Plan</th>
                 <th>Delivery Status</th>
-                <th>Estimated Delivery Date</th>
-                <th>Delivery Date</th>
+                {activeTab === 'Pending' && <th>Estimated Delivery Date</th>}
+                {activeTab === 'Transit' && <th>Delivery Date</th>}
+                {activeTab === 'Delivered' && <th>Delivery Date</th>}
                 <th>Cost</th>
-                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {selectedOrder.items.map((item, index) => (
-                <tr key={item.product_id}>
+                <tr key={`${item.product_id}-${index}`}>
                   <td>{index + 1}</td>
                   <td>
                     <span>{item.name}</span>
                   </td>
+                  <td>{item.selectedColor}</td>
                   <td>{item.quantity}</td>
-                  <td>{item.maintenancePlan ? item.maintenancePlan.title : 'N/A'}</td>
+                  <td>{item.maintenancePlan ? item.maintenancePlan : 'N/A'}</td>
                   <td>
-                    <select
-                      value={item.deliveryStatus}
-                      onChange={(e) => handleUpdateOrder(item.product_id, 'deliveryStatus', e.target.value)}
-                    >
-                      <option value="Pending">Pending</option>
-                      <option value="Transit">Transit</option>
-                      <option value="Delivered">Delivered</option>
-                      <option value="Cancelled">Cancelled</option>
-                    </select>
+                    {activeTab === 'Pending' && (
+                      <select
+                        value={item.deliveryStatus}
+                        onChange={(e) => handleUpdateOrder(item.product_id, 'deliveryStatus', e.target.value)}
+                      >
+                        <option value="Pending">Pending</option>
+                        <option value="Transit">Transit</option>
+                      </select>
+                    )}
+                    {activeTab === 'Transit' && (
+                      <select
+                        value={item.deliveryStatus}
+                        onChange={(e) => handleUpdateOrder(item.product_id, 'deliveryStatus', e.target.value)}
+                      >
+                        <option value="Transit">Transit</option>
+                        <option value="Delivered">Delivered</option>
+                      </select>
+                    )}
+                    {(activeTab === 'Cancelled' || activeTab === 'Delivered') && <span>{item.deliveryStatus}</span>}
                   </td>
-                  <td>
-                    <input
-                      type="date"
-                      value={item.EstimatedDeliveryDate}
-                      onChange={(e) => handleUpdateOrder(item.product_id, 'EstimatedDeliveryDate', e.target.value)}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="date"
-                      value={item.DeliveryDate}
-                      onChange={(e) => handleUpdateOrder(item.product_id, 'DeliveryDate', e.target.value)}
-                    />
-                  </td>
+                  {activeTab === 'Pending' && (
+                    <td>
+                      <input
+                        type="date"
+                        value={item.EstimatedDeliveryDate ? formatDate(item.EstimatedDeliveryDate) : todayDate()}
+                        onChange={(e) => handleUpdateOrder(item.product_id, 'EstimatedDeliveryDate', e.target.value)}
+                      />
+                    </td>
+                  )}
+                  {activeTab === 'Transit' && (
+                    <td>
+                      <input
+                        type="date"
+                        value={item.DeliveryDate ? formatDate(item.DeliveryDate) : todayDate()}
+                        onChange={(e) => handleUpdateOrder(item.product_id, 'DeliveryDate', e.target.value)}
+                      />
+                    </td>
+                  )}
+                  {activeTab === 'Delivered' && (
+                    <td>{item.DeliveryDate ? formatDate(item.DeliveryDate) : 'N/A'}</td>
+                  )}
                   <td>{item.Cost.toFixed(2)}</td>
-                  <td>
-                    {editItem[item.product_id] ? (
-                      <button className="admin-handle-orders-button" onClick={() => saveUpdate(item.product_id)}>
-                        Save
-                      </button>
-                    ) : null}
-                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          {(activeTab === 'Pending' || activeTab === 'Transit') && (
+            <div className="admin-handle-orders-save-button">
+              <button className="admin-handle-orders-button" onClick={saveUpdate}>
+                Save Changes
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>

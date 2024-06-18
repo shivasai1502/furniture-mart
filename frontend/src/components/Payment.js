@@ -143,7 +143,9 @@ const Payment = () => {
           _id: item.product._id,
           quantity: item.quantity,
           maintenancePlan: item.maintenancePlan,
-          maintenanceCost: item.product.maintenancePlans.find((plan) => plan.title === item.maintenancePlan)?.cost || 0,
+          maintenanceCost: item.maintenancePlanCost,
+          selectedColor: item.selectedColor,
+          selectedImage: item.selectedImage,
         })),
         cost: totalCost,
         tax: location.state.tax,
@@ -205,7 +207,7 @@ const Payment = () => {
               />
               <span className="payment-saved-text">Use existing payment method</span>
             </label>
-            {useExistingPayment && (
+            {useExistingPayment && ( 
               <select
                 className="payment-saved-select"
                 value={paymentMethod}

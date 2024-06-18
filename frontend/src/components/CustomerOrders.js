@@ -51,14 +51,16 @@ const CustomerOrder = () => {
                     <li key={item.product_id} className="customer-order-item-row">
                       <div className="customer-order-image-container">
                         <img
-                          src={`http://localhost:5000/api/products/images/${item.image_id}`}
+                          src={`http://localhost:5000/api/products/images/${item.selectedImage}`}
                           alt={item.name}
                           className="customer-order-image"
                         />
                       </div>
                       <div className="customer-order-item-info">
                         <p className="customer-order-item-name">{item.name}</p>
-                        <p className="customer-order-item-quantity">Quantity: {item.quantity} ,  Delivery Status: {item.deliveryStatus},  Maintenance Plan: {item.maintenancePlan}</p>
+                        <p className="customer-order-item-quantity">Brand: {item.brand} , Color: {item.selectedColor} ,  Maintenance Plan: {item.maintenancePlan}</p>
+                        <p className="customer-order-item-quantity">Quantity: {item.quantity}</p>
+                        <p className="customer-order-item-delivery-status">Delivery Status: {item.deliveryStatus}</p>
                       </div>
                     </li>
                   ))}

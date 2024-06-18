@@ -56,6 +56,12 @@
   margin-bottom: 5px;
 }
 
+.cart-item-color {
+  font-size: 16px;
+  color: #888;
+  margin-bottom: 5px;
+}
+
 .cart-item-price {
   font-size: 16px;
   color: #888;

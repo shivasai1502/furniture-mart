@@ -19,9 +19,18 @@ const CartPage = () => {
   }, [navigate]);
 
   const handleCheckout = () => {
-    const selectedItemsData = cartItems.filter((item, index) => selectedItems.includes(index));
+    const selectedItemsData = cartItems
+      .filter((item, index) => selectedItems.includes(index))
+      .map((item) => ({
+        ...item,
+        selectedColor: item.selectedColor,
+        selectedImage: item.selectedImage,
+        maintenancePlan: item.maintenancePlan,
+        maintenancePlanCost: item.maintenancePlan !== 'None' ? parseFloat(item.product.maintenancePlans.find((plan) => plan.title === item.maintenancePlan).cost) : 0,
+      }));
     navigate('/checkout', { state: { selectedItems: selectedItemsData } });
   };
+
 
   const handleDelete = () => {
     const updatedCartItems = cartItems.filter((item, index) => !selectedItems.includes(index));
@@ -32,7 +41,7 @@ const CartPage = () => {
 
   const calculateItemTotal = (item) => {
     const maintenancePlanCost = item.maintenancePlan !== 'None' ? parseFloat(item.product.maintenancePlans.find((plan) => plan.title === item.maintenancePlan).cost) : 0;
-    const itemTotal = item.product.price * item.quantity + maintenancePlanCost * item.quantity;
+    const itemTotal = (item.product.price + maintenancePlanCost) * item.quantity;
     return itemTotal.toFixed(2);
   };
 
@@ -71,12 +80,13 @@ const CartPage = () => {
               </div>
               <div className="cart-item-image">
                 <img
-                  src={`http://localhost:5000/api/products/images/${item.product.image_id}`}
+                  src={`http://localhost:5000/api/products/images/${item.selectedImage}`}
                   alt={item.product.name}
                 />
               </div>
               <div className="cart-item-details">
                 <div className="cart-item-name">{item.product.name}</div>
+                <div className="cart-item-color">Brand: {item.product.brand}, Color: {item.selectedColor}</div>
                 <div className="cart-item-price">Price: ${item.product.price}</div>
                 <div className="cart-item-maintenance-plan">
                   Maintenance Plan: {item.maintenancePlan}
@@ -111,4 +121,3 @@ const CartPage = () => {
 };
 
 export default CartPage;
-

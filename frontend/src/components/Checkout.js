@@ -135,6 +135,7 @@ const Checkout = () => {
           return (
             <div key={index} className="selected-item">
               <div className="item-name">{item.product.name}</div>
+              <div className="item-price">Color: {item.selectedColor}</div>
               <div className="item-price">Price: ${item.product.price}</div>
               <div className="item-maintenance-plan">
                 Maintenance Plan: {item.maintenancePlan} (${maintenancePlanCost})

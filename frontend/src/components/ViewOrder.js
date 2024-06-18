@@ -31,7 +31,7 @@ const ViewOrder = () => {
     fetchOrder();
   }, [orderId]);
 
-  const handleCancellation = async (itemId) => {
+  const handleCancellation = async (itemId, itemColor, itemMaintenancePlan) => {
     try {
       const token = localStorage.getItem('token');
       if (!token) {
@@ -40,7 +40,7 @@ const ViewOrder = () => {
         return;
       }
 
-      await axios.put(`http://localhost:5000/api/orders/${orderId}/${itemId}/cancel`, null, {
+      await axios.put(`http://localhost:5000/api/orders/${orderId}/${itemId}/${itemColor}/${itemMaintenancePlan}/cancel`, null, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -72,15 +72,17 @@ const ViewOrder = () => {
         <p><strong>Phone Number:</strong> {order.phoneNumber}</p>
       </div>
       <div className="view-order-items-container">
-        {order.items.map((item) => (
-          <div className="view-order-item" key={item.product_id}>
+        {order.items.map((item, index) => (
+          <div className="view-order-item" key={`${item.product_id}-${item.selectedColor}-${index}`}>
             <img
-              src={`http://localhost:5000/api/products/images/${item.image_id}`}
+              src={`http://localhost:5000/api/products/images/${item.selectedImage}`}
               alt={item.name}
               className="view-order-toy-image"
             />
             <div className="view-order-item-details">
               <p className="view-order-toy-name">{item.name}</p>
+              <p><strong>Brand:</strong> {item.brand}</p>
+              <p><strong>Color:</strong> {item.selectedColor}</p>
               <p><strong>Quantity:</strong> {item.quantity}, <strong>Maintenance Plan:</strong> {item.maintenancePlan}</p>
               {item.deliveryStatus === 'Pending' && (
                 <>
@@ -105,7 +107,7 @@ const ViewOrder = () => {
               )}
               <p><strong>Cost:</strong> ${item.Cost}</p>
               {item.deliveryStatus === 'Pending' ? (
-                <button className="view-order-cancel-button" onClick={() => handleCancellation(item.product_id)}>
+                <button className="view-order-cancel-button" onClick={() => handleCancellation(item.product_id, item.selectedColor, item.maintenancePlan)}>
                   Cancel
                 </button>
               ) : (

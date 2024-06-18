@@ -5,19 +5,9 @@ const Footer = () => {
     return (
         <footer className="footer">
             <div className="footer-container">
-                <div className="footer-column">
-                    <h3>Contact Details</h3>
-                    <p>Email: info@example.com</p>
-                    <p>Phone: +123-456-7890</p>
-                </div>
-                <div className="footer-column">
-                    <h3>Terms and Conditions</h3>
-                    <p>Terms of Service</p>
-                    <p>Privacy Policy</p>
-                </div>
             </div>
             <div className="footer-bottom">
-                <p>&copy; 2024 Toy Land. All rights reserved.</p>
+                <p>&copy; 2024 Furniture Mart. All rights reserved.</p>
             </div>
         </footer>
     );

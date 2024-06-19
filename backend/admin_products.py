@@ -131,21 +131,23 @@ def update_product(current_user, product_id):
             colors = request.form.getlist('colors')
             image_files = request.files.getlist('images')
 
-            images = []
+            images = product['images']  # Start with the existing images
+
             for i in range(len(colors)):
                 color = colors[i]
                 if i < len(image_files):
                     file = image_files[i]
-                    image_id = fs.put(file, filename=file.filename)
-                    images.append({
-                        'color': color,
-                        'file': str(image_id)
-                    })
-                else:
-                    images.append({
-                        'color': color,
-                        'file': product['images'][i]['file']
-                    })
+                    if file.filename:  # Check if a file is provided
+                        image_id = fs.put(file, filename=file.filename)
+                        images.append({
+                            'color': color,
+                            'file': str(image_id)
+                        })
+                    else:
+                        images.append({
+                            'color': color,
+                            'file': None
+                        })
 
             update_data['images'] = images
 

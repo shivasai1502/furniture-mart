@@ -54,7 +54,7 @@
 .product-details table td {
   padding: 10px;
   vertical-align: middle;
-  text-align: center;
+  text-align: left;
   border: 1px solid #ddd;
 }
 
@@ -77,6 +77,24 @@
   font-size: 14px;
 }
 
+.quantity-input {
+  width: 60px;
+  padding: 5px;
+  margin-right: 10px;
+}
+
+.stock-info {
+  font-size: 14px;
+  color: #888;
+  margin-top: 5px;
+}
+
+.error-message {
+  color: #ff0000;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
 .add-to-cart-btn {
   background-color: #343432;
   color: #fff;
@@ -91,4 +109,9 @@
 
 .add-to-cart-btn:hover {
   background-color: #aac527;
+}
+
+.add-to-cart-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

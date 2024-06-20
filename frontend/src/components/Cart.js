@@ -61,6 +61,24 @@ const CartPage = () => {
     }
   };
 
+  const handleQuantityChange = (index, newQuantity) => {
+    const updatedCartItems = [...cartItems];
+    const item = updatedCartItems[index];
+    
+    if (newQuantity > item.selectedVariant.stock) {
+      alert(`Only ${item.selectedVariant.stock} items available in stock.`);
+      return;
+    }
+
+    if (newQuantity < 1) {
+      newQuantity = 1;
+    }
+
+    item.quantity = newQuantity;
+    setCartItems(updatedCartItems);
+    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+  };
+
   return (
     <div className="cart-page">
       <h2>Items in Cart</h2>
@@ -95,7 +113,16 @@ const CartPage = () => {
                     </span>
                   )}
                 </div>
-                <div className="cart-item-quantity">Quantity: {item.quantity}</div>
+                <div className="cart-item-quantity">
+                  Quantity: 
+                  <input 
+                    type="number" 
+                    value={item.quantity} 
+                    onChange={(e) => handleQuantityChange(index, parseInt(e.target.value))}
+                    min="1"
+                    max={item.selectedVariant.stock}
+                  />
+                </div>
                 <div className="cart-item-total">Item Total: ${calculateItemTotal(item)}</div>
               </div>
             </div>

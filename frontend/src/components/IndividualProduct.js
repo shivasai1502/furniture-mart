@@ -11,12 +11,16 @@ const IndividualProduct = () => {
   const [selectedPlan, setSelectedPlan] = useState('None');
   const [selectedColor, setSelectedColor] = useState(product.variants[0].color);
   const [selectedVariant, setSelectedVariant] = useState(product.variants[0]);
+  const [quantity, setQuantity] = useState(1);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const variant = product.variants.find(
       (variant) => variant.color === selectedColor
     );
     setSelectedVariant(variant);
+    setQuantity(1);
+    setErrorMessage('');
   }, [selectedColor, product.variants]);
 
   const addToCart = () => {
@@ -28,12 +32,22 @@ const IndividualProduct = () => {
         item.selectedColor === selectedColor
     );
 
+    let newQuantity = quantity;
     if (existingItemIndex !== -1) {
-      cartItems[existingItemIndex].quantity += 1;
+      newQuantity += cartItems[existingItemIndex].quantity;
+    }
+
+    if (newQuantity > selectedVariant.stock) {
+      setErrorMessage(`Cannot add to cart. Total quantity (${newQuantity}) exceeds available stock (${selectedVariant.stock}).`);
+      return;
+    }
+
+    if (existingItemIndex !== -1) {
+      cartItems[existingItemIndex].quantity = newQuantity;
     } else {
       cartItems.push({
         product,
-        quantity: 1,
+        quantity,
         maintenancePlan: selectedPlan,
         selectedColor,
         selectedVariant,
@@ -46,6 +60,29 @@ const IndividualProduct = () => {
       setButtonText('Add to Cart');
     }, 2000);
     navigate('/cart');
+  };
+
+  const handleQuantityChange = (e) => {
+    const newValue = e.target.value;
+    if (newValue === '') {
+      setQuantity('');
+      setErrorMessage('');
+    } else {
+      const newQuantity = parseInt(newValue);
+      if (isNaN(newQuantity)) {
+        setQuantity('');
+        setErrorMessage('Please enter a valid number');
+      } else if (newQuantity < 0) {
+        setQuantity(0);
+        setErrorMessage('Quantity cannot be negative');
+      } else if (newQuantity > selectedVariant.stock) {
+        setQuantity(newQuantity);
+        setErrorMessage(`Only ${selectedVariant.stock} items available in stock.`);
+      } else {
+        setQuantity(newQuantity);
+        setErrorMessage('');
+      }
+    }
   };
 
   return (
@@ -146,12 +183,27 @@ const IndividualProduct = () => {
                 <td>{product.additionalInfo.split('\n').map((line, index) => <div key={index}>{line}</div>)}</td>
               </tr>
               <tr>
-                <td>Stock</td>
-                <td>{selectedVariant.stock}</td>
+                <td>Quantity</td>
+                <td>
+                  <Form.Control
+                    type="number"
+                    value={quantity}
+                    onChange={handleQuantityChange}
+                    min="0"
+                    max={selectedVariant.stock}
+                  />
+                  {errorMessage && <div className="text-danger">{errorMessage}</div>}
+                  <div>Available: {selectedVariant.stock}</div>
+                </td>
               </tr>
             </tbody>
           </Table>
-          <Button variant="primary" className="add-to-cart-btn" onClick={addToCart}>
+          <Button 
+            variant="primary" 
+            className="add-to-cart-btn" 
+            onClick={addToCart}
+            disabled={quantity > selectedVariant.stock || quantity <= 0 || quantity === ''}
+          >
             {buttonText}
           </Button>
         </Col>

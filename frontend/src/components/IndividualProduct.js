@@ -9,15 +9,15 @@ const IndividualProduct = () => {
   const navigate = useNavigate();
   const [buttonText, setButtonText] = useState('Add to Cart');
   const [selectedPlan, setSelectedPlan] = useState('None');
-  const [selectedColor, setSelectedColor] = useState(product.images[0].color);
-  const [selectedImage, setSelectedImage] = useState(product.images[0].file);
+  const [selectedColor, setSelectedColor] = useState(product.variants[0].color);
+  const [selectedVariant, setSelectedVariant] = useState(product.variants[0]);
 
   useEffect(() => {
-    const selectedColorImage = product.images.find(
-      (image) => image.color === selectedColor
+    const variant = product.variants.find(
+      (variant) => variant.color === selectedColor
     );
-    setSelectedImage(selectedColorImage.file);
-  }, [selectedColor, product.images]);
+    setSelectedVariant(variant);
+  }, [selectedColor, product.variants]);
 
   const addToCart = () => {
     const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
@@ -36,7 +36,7 @@ const IndividualProduct = () => {
         quantity: 1,
         maintenancePlan: selectedPlan,
         selectedColor,
-        selectedImage,
+        selectedVariant,
       });
     }
 
@@ -54,20 +54,20 @@ const IndividualProduct = () => {
         <Col md={6} className="product-image-container">
           <div className="image-wrapper">
             <img
-              src={`http://localhost:5000/api/products/images/${selectedImage}`}
+              src={`http://localhost:5000/api/products/variant/image/${selectedVariant.image}`}
               alt={product.name}
               className="product-image"
             />
           </div>
           <div className="color-options">
-            {product.images.map((image) => (
+            {product.variants.map((variant) => (
               <Form.Check
-                key={image.color}
+                key={variant.color}
                 type="radio"
-                id={`color-${image.color}`}
-                label={image.color}
-                checked={selectedColor === image.color}
-                onChange={() => setSelectedColor(image.color)}
+                id={`color-${variant.color}`}
+                label={variant.color}
+                checked={selectedColor === variant.color}
+                onChange={() => setSelectedColor(variant.color)}
               />
             ))}
           </div>
@@ -88,17 +88,21 @@ const IndividualProduct = () => {
                 <td>Features</td>
                 <td>{product.features.split('\n').map((line, index) => <div key={index}>{line}</div>)}</td>
               </tr>
-              {product.dimensions.map((dimension, index) => (
-                <tr key={index}>
-                  <td>{dimension.label}</td>
-                  <td>{dimension.value}</td>
-                </tr>
-              ))}
+              <tr>
+                <td>Dimensions</td>
+                <td>
+                  {selectedVariant.dimensions.map((dimension, index) => (
+                    <div key={index}>
+                      {dimension.key} - {dimension.value}
+                    </div>
+                  ))}
+                </td>
+              </tr>
               <tr>
                 <td>Specification</td>
-                <td>{product.specification.split('\n').map((line, index) => <div key={index}>{line}</div>)}</td>
+                <td>{product.specifications.split('\n').map((line, index) => <div key={index}>{line}</div>)}</td>
               </tr>
-              {product.hasMaintenance && (
+              {product.maintenancePlans.length > 0 && (
                 <tr>
                   <td>Maintenance Plans</td>
                   <td>
@@ -140,6 +144,10 @@ const IndividualProduct = () => {
               <tr>
                 <td>Additional Information</td>
                 <td>{product.additionalInfo.split('\n').map((line, index) => <div key={index}>{line}</div>)}</td>
+              </tr>
+              <tr>
+                <td>Stock</td>
+                <td>{selectedVariant.stock}</td>
               </tr>
             </tbody>
           </Table>

@@ -47,6 +47,11 @@ def place_order(user):
     # Set additional fields for each item
     for item in items:
         product = db.products.find_one({'_id': ObjectId(item['_id'])})
+        variant = db.variants.find_one({'_id': ObjectId(item['selectedVariantId'])})
+        
+        if not variant:
+            return jsonify({'error': 'Invalid variant selected'}), 400
+        
         item['deliveryStatus'] = 'Pending'
         estimated_delivery_date = datetime.now() + timedelta(days=5)
         item['EstimatedDeliveryDate'] = estimated_delivery_date.strftime('%m-%d-%Y')
@@ -55,14 +60,14 @@ def place_order(user):
         item['Cost'] = item['quantity'] * product['price'] + float(item['maintenanceCost'])
         item['maintenancePlan'] = item['maintenancePlan']
         item['maintenanceCost'] = item['maintenanceCost']
-        item['selectedColor'] = item['selectedColor']
-        item['selectedImage'] = item['selectedImage']
+        item['selectedColor'] = variant['color']
+        item['selectedImage'] = variant['image']
         
-        # Update the stock quantity of the product
-        new_stock_quantity = product['stockQuantity'] - item['quantity']
-        db.products.update_one(
-            {'_id': ObjectId(item['_id'])},
-            {'$set': {'stockQuantity': new_stock_quantity}}
+        # Update the stock quantity of the variant
+        new_stock_quantity = variant['stock'] - item['quantity']
+        db.variants.update_one(
+            {'_id': ObjectId(item['selectedVariantId'])},
+            {'$set': {'stock': new_stock_quantity}}
         )
 
     payment_id = None
@@ -118,12 +123,15 @@ def get_customer_orders(user):
         order_items = []
         for item in order['items']:
             product = db.products.find_one({'_id': ObjectId(item['_id'])})
+            if product is None:
+                continue  # Skip this item if product is not found
+
             order_item = {
                 'product_id': str(item['_id']),
                 'name': product['name'],
                 'quantity': item['quantity'],
                 'selectedImage': item['selectedImage'],
-                'deliveryStatus': item['deliveryStatus'],
+                'deliveryStatus': item.get('deliveryStatus'),
                 'maintenancePlan': item.get('maintenancePlan'),
                 'selectedColor': item['selectedColor'],
                 'brand': product['brand']
@@ -138,8 +146,6 @@ def get_customer_orders(user):
         customer_orders.append(customer_order)
     
     return json.dumps(customer_orders, cls=JSONEncoder), 200
-
-
 
 
 @order_bp.route('/<order_id>', methods=['GET'])
@@ -219,4 +225,3 @@ def cancel_item(user, order_id, item_id, item_color, item_maintenancePlan):
         return jsonify({'message': 'Item cancelled successfully'}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-

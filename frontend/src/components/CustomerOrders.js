@@ -51,7 +51,7 @@ const CustomerOrder = () => {
                     <li key={item.product_id} className="customer-order-item-row">
                       <div className="customer-order-image-container">
                         <img
-                          src={`http://localhost:5000/api/products/images/${item.selectedImage}`}
+                          src={`http://localhost:5000/api/products/variant/image/${item.selectedImage}`}
                           alt={item.name}
                           className="customer-order-image"
                         />

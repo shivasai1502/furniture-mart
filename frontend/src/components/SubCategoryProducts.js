@@ -22,9 +22,7 @@ const SubCategoryProducts = () => {
   }, [subcategoryId]);
 
   const handleProductClick = (product) => {
-    if (product.stockQuantity !== 0) {
-      navigate(`/view-individual-product/${product._id}`, { state: { product } });
-    }
+    navigate(`/view-individual-product/${product._id}`, { state: { product } });
   };
 
   return (
@@ -32,18 +30,17 @@ const SubCategoryProducts = () => {
       <Row className="productview-row">
         {products.map((product) => (
           <Col key={product._id} md={6} lg={4} xl={3}>
-            <Card className={`productview-card ${product.stockQuantity === 0 ? 'productview-out-of-stock' : ''}`}>
+            <Card className="productview-card">
               <a
                 href="#"
                 onClick={(e) => {
                   e.preventDefault();
                   handleProductClick(product);
                 }}
-                className={product.stockQuantity === 0 ? 'productview-disabled-link' : ''}
               >
                 <Card.Img
                   variant="top"
-                  src={`http://localhost:5000/api/products/images/${product.images[0].file}`}
+                  src={`http://localhost:5000/api/products/variant/image/${product.variants[0].image}`}
                   className="productview-img"
                 />
               </a>
@@ -51,7 +48,7 @@ const SubCategoryProducts = () => {
                 <Card.Title>
                   <a
                     href="#"
-                    className={`productview-name-link ${product.stockQuantity === 0 ? 'productview-disabled-link' : ''}`}
+                    className="productview-name-link"
                     onClick={(e) => {
                       e.preventDefault();
                       handleProductClick(product);
@@ -65,9 +62,6 @@ const SubCategoryProducts = () => {
                 </Card.Text>
                 <Card.Text className="productview-card-price">
                   Price: ${product.price}
-                </Card.Text>
-                <Card.Text className={`productview-card-stock ${product.stockQuantity === 0 ? 'productview-out-of-stock' : ''}`}>
-                  {product.stockQuantity === 0 ? 'Out of Stock' : `Stock: ${product.stockQuantity}`}
                 </Card.Text>
               </Card.Body>
             </Card>

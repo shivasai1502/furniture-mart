@@ -24,13 +24,12 @@ const CartPage = () => {
       .map((item) => ({
         ...item,
         selectedColor: item.selectedColor,
-        selectedImage: item.selectedImage,
+        selectedImage: item.selectedVariant.image,
         maintenancePlan: item.maintenancePlan,
         maintenancePlanCost: item.maintenancePlan !== 'None' ? parseFloat(item.product.maintenancePlans.find((plan) => plan.title === item.maintenancePlan).cost) : 0,
       }));
     navigate('/checkout', { state: { selectedItems: selectedItemsData } });
   };
-
 
   const handleDelete = () => {
     const updatedCartItems = cartItems.filter((item, index) => !selectedItems.includes(index));
@@ -80,7 +79,7 @@ const CartPage = () => {
               </div>
               <div className="cart-item-image">
                 <img
-                  src={`http://localhost:5000/api/products/images/${item.selectedImage}`}
+                  src={`http://localhost:5000/api/products/variant/image/${item.selectedVariant.image}`}
                   alt={item.product.name}
                 />
               </div>

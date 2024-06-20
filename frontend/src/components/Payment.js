@@ -145,7 +145,8 @@ const Payment = () => {
           maintenancePlan: item.maintenancePlan,
           maintenanceCost: item.maintenancePlanCost,
           selectedColor: item.selectedColor,
-          selectedImage: item.selectedImage,
+          selectedVariantId: item.selectedVariant._id,
+          selectedImage: item.selectedVariant.image,
         })),
         cost: totalCost,
         tax: location.state.tax,
@@ -207,7 +208,7 @@ const Payment = () => {
               />
               <span className="payment-saved-text">Use existing payment method</span>
             </label>
-            {useExistingPayment && ( 
+            {useExistingPayment && (
               <select
                 className="payment-saved-select"
                 value={paymentMethod}

@@ -75,7 +75,7 @@ const ViewOrder = () => {
         {order.items.map((item, index) => (
           <div className="view-order-item" key={`${item.product_id}-${item.selectedColor}-${index}`}>
             <img
-              src={`http://localhost:5000/api/products/images/${item.selectedImage}`}
+              src={`http://localhost:5000/api/products/variant/image/${item.selectedImage}`}
               alt={item.name}
               className="view-order-toy-image"
             />

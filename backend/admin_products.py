@@ -6,10 +6,10 @@ from admin_utils import token_required
 from gridfs import GridFS
 from jsonencoder import JSONEncoder
 
-admin_toys_bp = Blueprint('product', __name__)
+admin_furnitures_bp = Blueprint('product', __name__)
 fs = GridFS(db)
 
-@admin_toys_bp.route('/variant/insert', methods=['POST'])
+@admin_furnitures_bp.route('/variant/insert', methods=['POST'])
 @token_required
 def add_variant(current_user):
     try:
@@ -36,7 +36,7 @@ def add_variant(current_user):
         return jsonify({'error': 'An error occurred while adding the variant'}), 500
 
 
-@admin_toys_bp.route('/variant/edit/<string:variant_id>', methods=['PUT'])
+@admin_furnitures_bp.route('/variant/edit/<string:variant_id>', methods=['PUT'])
 @token_required
 def edit_variant(current_user, variant_id):
     try:
@@ -65,7 +65,7 @@ def edit_variant(current_user, variant_id):
         return jsonify({'error': 'An error occurred while updating the variant'}), 500
 
 
-@admin_toys_bp.route('/insert', methods=['POST'])
+@admin_furnitures_bp.route('/insert', methods=['POST'])
 @token_required
 def add_product(current_user):
     try:
@@ -110,7 +110,7 @@ def add_product(current_user):
         return jsonify({'error': 'An error occurred while adding the product'}), 500
 
 
-@admin_toys_bp.route('/all', methods=['GET'])
+@admin_furnitures_bp.route('/all', methods=['GET'])
 @token_required
 def get_all_products(current_user):
     try:
@@ -134,7 +134,7 @@ def get_all_products(current_user):
         return jsonify({'error': 'An error occurred while fetching products'}), 500
 
 
-@admin_toys_bp.route('/<string:product_id>', methods=['GET'])
+@admin_furnitures_bp.route('/<string:product_id>', methods=['GET'])
 @token_required
 def get_product(current_user, product_id):
     try:
@@ -159,7 +159,7 @@ def get_product(current_user, product_id):
         return jsonify({'error': 'An error occurred while fetching the product'}), 500
 
 
-@admin_toys_bp.route('/edit/<string:product_id>', methods=['PUT'])
+@admin_furnitures_bp.route('/edit/<string:product_id>', methods=['PUT'])
 @token_required
 def edit_product(current_user, product_id):
     try:
@@ -200,7 +200,7 @@ def edit_product(current_user, product_id):
         return jsonify({'error': 'An error occurred while updating the product'}), 500
 
 
-@admin_toys_bp.route('/delete/<string:product_id>', methods=['DELETE'])
+@admin_furnitures_bp.route('/delete/<string:product_id>', methods=['DELETE'])
 @token_required
 def delete_product(current_user, product_id):
     try:

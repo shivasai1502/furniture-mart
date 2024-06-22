@@ -77,10 +77,10 @@ const ViewOrder = () => {
             <img
               src={`http://localhost:5000/api/products/variant/image/${item.selectedImage}`}
               alt={item.name}
-              className="view-order-toy-image"
+              className="view-order-furniture-image"
             />
             <div className="view-order-item-details">
-              <p className="view-order-toy-name">{item.name}</p>
+              <p className="view-order-furniture-name">{item.name}</p>
               <p><strong>Brand:</strong> {item.brand}</p>
               <p><strong>Color:</strong> {item.selectedColor}</p>
               <p><strong>Quantity:</strong> {item.quantity}, <strong>Maintenance Plan:</strong> {item.maintenancePlan}</p>
